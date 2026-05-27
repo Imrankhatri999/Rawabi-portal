@@ -1,1 +1,644 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rawabi Specialized Contracting | Portal</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <style>
+        * { font-family: 'Segoe UI', sans-serif; }
+        body { background: linear-gradient(135deg, #1e3a5f 0%, #764ba2 100%); min-height: 100vh; }
+        .glass-card { background: white; border-radius: 24px; padding: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        .btn-primary { background: #f59e0b; transition: 0.2s; cursor: pointer; }
+        .btn-primary:hover { background: #d97706; }
+        input, select { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ddd; border-radius: 12px; }
+        .item-row { display: flex; gap: 10px; margin-bottom: 10px; }
+        .status-badge { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; }
+        .status-approved { background: #d1fae5; color: #065f46; }
+        .status-pending { background: #fef3c7; color: #92400e; }
+        .status-blocked { background: #fee2e2; color: #991b1b; }
+        .filter-btn { padding: 6px 16px; border-radius: 20px; cursor: pointer; background: #f3f4f6; }
+        .filter-btn.active { background: #f59e0b; color: white; }
+        .logo-preview { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; cursor: pointer; border: 2px solid #f59e0b; }
+        .company-name-ar { font-size: 12px; color: #666; }
+        .dropdown { position: relative; display: inline-block; }
+        .dropdown-content { display: none; position: absolute; right: 0; top: 100%; background-color: white; min-width: 180px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); border-radius: 10px; z-index: 50; margin-top: 5px; }
+        .dropdown-content a { color: #333; padding: 10px 16px; text-decoration: none; display: block; cursor: pointer; border-radius: 10px; }
+        .dropdown-content a:hover { background-color: #f3f4f6; }
+        .dropdown:hover .dropdown-content { display: block; }
+        .user-table { width: 100%; border-collapse: collapse; }
+        .user-table th, .user-table td { padding: 10px; border-bottom: 1px solid #e5e7eb; text-align: left; }
+        .user-table th { background: #f3f4f6; }
+        .search-box { position: relative; margin-bottom: 20px; }
+        .search-box i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #9ca3af; }
+        .search-box input { padding-left: 35px; }
+    </style>
+</head>
+<body>
 
+<!-- Login Screen -->
+<div id="loginScreen" class="min-h-screen flex items-center justify-center p-4">
+    <div class="glass-card max-w-md w-full text-center">
+        <div class="flex justify-center mb-4">
+            <img id="loginLogo" src="https://placehold.co/80x80/f59e0b/ffffff?text=RSC" class="w-20 h-20 rounded-full border-2 border-orange-500 cursor-pointer" onclick="uploadLogo()">
+        </div>
+        <h2 class="text-2xl font-bold" style="color:#1e3a5f;">RAWABI <span style="color:#f59e0b;">Specialized Contracting</span></h2>
+        <p class="company-name-ar text-gray-500 mb-2">روابي للمقاولات المتخصصة</p>
+        <p class="text-gray-500 mb-6">Material Management Portal</p>
+        <input type="text" id="loginUsername" placeholder="Username" class="w-full">
+        <input type="password" id="loginPassword" placeholder="Password" class="w-full mt-3">
+        <button onclick="doLogin()" class="btn-primary w-full py-2 rounded-xl text-white font-semibold mt-4">Login</button>
+        <div class="flex justify-between mt-4 text-sm">
+            <a href="#" onclick="showRegister()" class="text-orange-500 hover:underline">Create Account</a>
+            <a href="#" onclick="showForgot()" class="text-orange-500 hover:underline">Forgot Password?</a>
+        </div>
+    </div>
+</div>
+
+<!-- Register Screen -->
+<div id="registerScreen" class="min-h-screen flex items-center justify-center p-4" style="display:none;">
+    <div class="glass-card max-w-md w-full">
+        <h2 class="text-2xl font-bold text-center" style="color:#1e3a5f;">Create Account</h2>
+        <input type="text" id="regFullname" placeholder="Full Name">
+        <input type="text" id="regUsername" placeholder="Username">
+        <input type="email" id="regEmail" placeholder="Email">
+        <input type="password" id="regPassword" placeholder="Password">
+        <input type="text" id="regPhone" placeholder="Phone Number">
+        <input type="text" id="regPosition" placeholder="Position / Job Title">
+        <input type="text" id="regSecurity" placeholder="Security Answer (e.g., favorite color)">
+        <button onclick="doRegister()" class="btn-primary w-full py-2 rounded-xl text-white font-semibold">Register</button>
+        <button onclick="showLogin()" class="w-full mt-2 py-2 rounded-xl border">Back to Login</button>
+    </div>
+</div>
+
+<!-- Forgot Screen -->
+<div id="forgotScreen" class="min-h-screen flex items-center justify-center p-4" style="display:none;">
+    <div class="glass-card max-w-md w-full">
+        <h2 class="text-2xl font-bold text-center" style="color:#1e3a5f;">Reset Password</h2>
+        <input type="text" id="forgotUsername" placeholder="Username">
+        <input type="text" id="forgotAnswer" placeholder="Security Answer">
+        <input type="password" id="forgotNewPass" placeholder="New Password">
+        <button onclick="resetPassword()" class="btn-primary w-full py-2 rounded-xl text-white font-semibold">Reset Password</button>
+        <button onclick="showLogin()" class="w-full mt-2 py-2 rounded-xl border">Back to Login</button>
+    </div>
+</div>
+
+<!-- Change Password Screen -->
+<div id="changeScreen" class="min-h-screen flex items-center justify-center p-4" style="display:none;">
+    <div class="glass-card max-w-md w-full">
+        <h2 class="text-2xl font-bold text-center" style="color:#1e3a5f;">Change Password</h2>
+        <input type="password" id="currentPwd" placeholder="Current Password">
+        <input type="password" id="newPwd" placeholder="New Password">
+        <input type="password" id="confirmPwd" placeholder="Confirm Password">
+        <button onclick="changePassword()" class="btn-primary w-full py-2 rounded-xl text-white font-semibold">Update Password</button>
+        <button onclick="hideChange()" class="w-full mt-2 py-2 rounded-xl border">Cancel</button>
+    </div>
+</div>
+
+<!-- Edit Profile Screen -->
+<div id="editProfileScreen" class="min-h-screen flex items-center justify-center p-4" style="display:none;">
+    <div class="glass-card max-w-md w-full">
+        <h2 class="text-2xl font-bold text-center" style="color:#1e3a5f;">Edit Profile</h2>
+        <input type="text" id="editFullname" placeholder="Full Name">
+        <input type="text" id="editPhone" placeholder="Phone Number">
+        <input type="text" id="editPosition" placeholder="Position / Job Title">
+        <div class="flex gap-3 mt-4">
+            <button onclick="saveProfile()" class="btn-primary flex-1 py-2 rounded-xl text-white font-semibold">Save Changes</button>
+            <button onclick="hideEditProfile()" class="btn-secondary flex-1 py-2 rounded-xl text-white font-semibold bg-gray-500">Cancel</button>
+        </div>
+        <button onclick="showDeleteAccountConfirm()" class="bg-red-500 w-full mt-4 py-2 rounded-xl text-white font-semibold"><i class="fas fa-trash"></i> Delete My Account</button>
+    </div>
+</div>
+
+<!-- Delete Account Confirm Modal -->
+<div id="deleteAccountModal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:1000;">
+    <div class="bg-white p-6 rounded-xl max-w-md">
+        <div class="text-center">
+            <i class="fas fa-exclamation-triangle text-6xl text-red-500 mb-4"></i>
+            <h3 class="text-xl font-bold mb-2">Delete Account</h3>
+            <p class="text-gray-600 mb-4">Are you sure you want to delete your account? This action cannot be undone.</p>
+            <div class="flex gap-3">
+                <button onclick="confirmDeleteAccount()" class="bg-red-500 flex-1 py-2 rounded-xl text-white">Yes, Delete</button>
+                <button onclick="closeDeleteModal()" class="bg-gray-500 flex-1 py-2 rounded-xl text-white">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Dashboard -->
+<div id="dashboard" style="display:none;">
+    <div class="container mx-auto p-4">
+        <div class="header bg-white p-4 rounded-xl mb-4 flex justify-between items-center flex-wrap gap-3">
+            <div class="flex items-center gap-3">
+                <img id="headerLogo" src="https://placehold.co/50x50/f59e0b/ffffff?text=RSC" class="logo-preview" onclick="uploadLogo()">
+                <div>
+                    <h1 class="text-xl font-bold" style="color:#1e3a5f;">RAWABI <span style="color:#f59e0b;">Specialized Contracting</span></h1>
+                    <p class="company-name-ar text-gray-500">روابي للمقاولات المتخصصة</p>
+                    <p class="text-xs text-gray-500">Material Management Portal</p>
+                </div>
+            </div>
+            <div class="flex items-center gap-3">
+                <span id="userNameDisplay" class="font-medium"></span>
+                <div class="dropdown">
+                    <button class="bg-gray-200 px-3 py-2 rounded-full"><i class="fas fa-user-circle text-xl"></i></button>
+                    <div class="dropdown-content">
+                        <a onclick="showEditProfile()"><i class="fas fa-user-edit mr-2"></i> Edit Profile</a>
+                        <a onclick="showChangePassword()"><i class="fas fa-key mr-2"></i> Change Password</a>
+                        <a onclick="logout()"><i class="fas fa-sign-out-alt mr-2"></i> Logout</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Stats Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
+            <div class="bg-white rounded-xl p-4 text-center border-l-4 border-orange-500"><i class="fas fa-truck text-3xl text-orange-500"></i><h3 id="statGate" class="text-2xl font-bold mt-2">0</h3><p class="text-gray-500">Gate Passes</p></div>
+            <div class="bg-white rounded-xl p-4 text-center border-l-4 border-orange-500"><i class="fas fa-clipboard-list text-3xl text-blue-500"></i><h3 id="statReq" class="text-2xl font-bold mt-2">0</h3><p class="text-gray-500">Material Requests</p></div>
+            <div class="bg-white rounded-xl p-4 text-center border-l-4 border-orange-500"><i class="fas fa-users text-3xl text-green-500"></i><h3 id="statUser" class="text-2xl font-bold mt-2">0</h3><p class="text-gray-500">Active Users</p></div>
+            <div class="bg-white rounded-xl p-4 text-center border-l-4 border-orange-500"><i class="fas fa-check-circle text-3xl text-purple-500"></i><h3 id="statApp" class="text-2xl font-bold mt-2">0</h3><p class="text-gray-500">Approved</p></div>
+        </div>
+
+        <!-- Action Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
+            <div class="glass-card text-center cursor-pointer" onclick="showGateForm()"><i class="fas fa-truck text-5xl text-orange-500 mb-3"></i><h3 class="font-bold">Material Gate Pass</h3><p class="text-xs text-gray-500">Create Gate Pass</p></div>
+            <div class="glass-card text-center cursor-pointer" onclick="showRequestForm()"><i class="fas fa-clipboard-list text-5xl text-blue-500 mb-3"></i><h3 class="font-bold">Material Request</h3><p class="text-xs text-gray-500">Request Materials</p></div>
+            <div class="glass-card text-center cursor-pointer" onclick="showAllRequests()"><i class="fas fa-chart-line text-5xl text-green-500 mb-3"></i><h3 class="font-bold">All Requests</h3><p class="text-xs text-gray-500">Track & Approve</p></div>
+        </div>
+
+        <!-- Admin Panel -->
+        <div id="adminPanel" class="bg-white rounded-xl p-4 mb-6" style="display:none;">
+            <h3 class="font-bold mb-3"><i class="fas fa-shield-alt text-orange-500"></i> Admin Controls</h3>
+            <div class="flex gap-2 flex-wrap">
+                <button onclick="showUsers()" class="bg-gray-800 text-white px-3 py-1 rounded text-sm">👥 Manage Users</button>
+                <button onclick="exportAllData()" class="bg-green-600 text-white px-3 py-1 rounded text-sm">📤 Export Data</button>
+                <button onclick="importDataPrompt()" class="bg-blue-600 text-white px-3 py-1 rounded text-sm">📥 Import Data</button>
+                <button onclick="uploadLogo()" class="bg-orange-600 text-white px-3 py-1 rounded text-sm">🖼️ Change Logo</button>
+            </div>
+        </div>
+
+        <!-- Content Area -->
+        <div id="contentArea" class="bg-white rounded-xl p-6 min-h-[350px]">
+            <p class="text-center text-gray-500">Select an option above</p>
+        </div>
+    </div>
+</div>
+
+<div id="modal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:1000;"><div class="bg-white p-6 rounded-xl max-w-md"><h3 id="modalTitle" class="font-bold">Message</h3><p id="modalMsg" class="my-3"></p><button onclick="closeModal()" class="btn-primary px-4 py-1 rounded">OK</button></div></div>
+
+<script>
+    // ============ DATA STORAGE ============
+    let currentUser = null;
+    let currentFilter = 'all';
+    let gateItems = [{ name: '', qty: 1, unit: 'Each' }];
+    let reqItems = [{ name: '', qty: 1, unit: 'Each' }];
+    let allGatePasses = [];
+    let allMaterialRequests = [];
+    let allUsers = {};
+
+    const DEPARTMENTS = ['Civil', 'Electrical', 'Mechanical', 'Mechanic', 'HSE', 'Administrator', 'HR'];
+    const LOCATIONS = ['SAMREF', 'Samref Oil Port', 'King Fahd Industrial Port', 'Camp'];
+    const VEHICLE_TYPES = ['Pick-up', 'Boom truck', 'Truck', 'Flatbed', 'JCB', 'Crane', 'Diesel tanker'];
+    const UNITS = ['Each', 'Piece', 'Set', 'Packet', 'Load', 'Lot', 'Box', 'Bundle', 'Bottle', 'KG', 'Bag', 'Barrel', 'Carton', 'Cubic Meter', 'Cylinder', 'Feet', 'Gallon', 'Meter', 'Pair', 'Ton'];
+
+    function showModal(title, msg) { document.getElementById('modalTitle').innerText = title; document.getElementById('modalMsg').innerHTML = msg; document.getElementById('modal').style.display = 'flex'; }
+    function closeModal() { document.getElementById('modal').style.display = 'none'; }
+
+    // Logo Upload
+    function uploadLogo() {
+        const input = document.createElement('input');
+        input.type = 'file'; input.accept = 'image/*';
+        input.onchange = (e) => {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = (ev) => {
+                    const imgData = ev.target.result;
+                    document.getElementById('loginLogo').src = imgData;
+                    document.getElementById('headerLogo').src = imgData;
+                    localStorage.setItem('company_logo', imgData);
+                    showModal('Success', 'Company logo updated!');
+                };
+                reader.readAsDataURL(file);
+            }
+        };
+        input.click();
+    }
+    const savedLogo = localStorage.getItem('company_logo');
+    if (savedLogo) {
+        document.getElementById('loginLogo').src = savedLogo;
+        document.getElementById('headerLogo').src = savedLogo;
+    }
+
+    // Initialize Demo Users
+    function initData() {
+        if (!localStorage.getItem('portal_users')) {
+            allUsers = {
+                'admin': { password: 'admin123', role: 'admin', name: 'Administrator', email: 'admin@rawabi.com', phone: '+966500000000', position: 'System Administrator', approved: true, blocked: false, securityAnswer: 'blue', createdDate: new Date().toLocaleDateString() },
+                'gate.approver': { password: 'approve123', role: 'gate_approver', name: 'Gate Approver', email: 'gate@rawabi.com', phone: '+966500000001', position: 'Gate Approver', approved: true, blocked: false, securityAnswer: 'red', createdDate: new Date().toLocaleDateString() },
+                'ahmed': { password: 'civil123', role: 'staff', name: 'Ahmed Civil', email: 'ahmed@rawabi.com', phone: '+966500000002', position: 'Civil Engineer', approved: true, blocked: false, securityAnswer: 'green', createdDate: new Date().toLocaleDateString() }
+            };
+            localStorage.setItem('portal_users', JSON.stringify(allUsers));
+        } else {
+            allUsers = JSON.parse(localStorage.getItem('portal_users'));
+        }
+        
+        if (!localStorage.getItem('gate_passes')) localStorage.setItem('gate_passes', JSON.stringify([]));
+        if (!localStorage.getItem('material_requests')) localStorage.setItem('material_requests', JSON.stringify([]));
+        
+        allGatePasses = JSON.parse(localStorage.getItem('gate_passes'));
+        allMaterialRequests = JSON.parse(localStorage.getItem('material_requests'));
+    }
+    initData();
+
+    function saveAllData() {
+        localStorage.setItem('gate_passes', JSON.stringify(allGatePasses));
+        localStorage.setItem('material_requests', JSON.stringify(allMaterialRequests));
+        localStorage.setItem('portal_users', JSON.stringify(allUsers));
+        updateStats();
+    }
+
+    // Export/Import for Cross-Computer Sharing
+    function exportAllData() {
+        const exportData = {
+            gate_passes: allGatePasses,
+            material_requests: allMaterialRequests,
+            portal_users: allUsers,
+            export_date: new Date().toISOString()
+        };
+        const blob = new Blob([JSON.stringify(exportData, null, 2)], { type: 'application/json' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `rawabi_data_${new Date().toISOString().split('T')[0]}.json`;
+        a.click();
+        URL.revokeObjectURL(url);
+        showModal('Success', 'Data exported! Share this file with other computers.');
+    }
+
+    function importDataPrompt() {
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.json';
+        input.onchange = function(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+            const reader = new FileReader();
+            reader.onload = function(ev) {
+                try {
+                    const imported = JSON.parse(ev.target.result);
+                    if (imported.gate_passes) {
+                        allGatePasses = imported.gate_passes;
+                        localStorage.setItem('gate_passes', JSON.stringify(allGatePasses));
+                    }
+                    if (imported.material_requests) {
+                        allMaterialRequests = imported.material_requests;
+                        localStorage.setItem('material_requests', JSON.stringify(allMaterialRequests));
+                    }
+                    if (imported.portal_users) {
+                        allUsers = imported.portal_users;
+                        localStorage.setItem('portal_users', JSON.stringify(allUsers));
+                    }
+                    updateStats();
+                    showModal('Success', `Imported ${allGatePasses.length} gate passes and ${allMaterialRequests.length} material requests!`);
+                    if (document.getElementById('contentArea').innerHTML.includes('All Requests')) showAllRequests();
+                } catch(err) { showModal('Error', 'Invalid file format'); }
+            };
+            reader.readAsText(file);
+        };
+        input.click();
+    }
+
+    // Profile Functions
+    function showEditProfile() {
+        document.getElementById('editFullname').value = currentUser.name || '';
+        document.getElementById('editPhone').value = currentUser.phone || '';
+        document.getElementById('editPosition').value = currentUser.position || '';
+        document.getElementById('dashboard').style.display = 'none';
+        document.getElementById('editProfileScreen').style.display = 'flex';
+    }
+
+    function hideEditProfile() {
+        document.getElementById('editProfileScreen').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'block';
+        updateStats();
+    }
+
+    function saveProfile() {
+        allUsers[currentUser.username].name = document.getElementById('editFullname').value;
+        allUsers[currentUser.username].phone = document.getElementById('editPhone').value;
+        allUsers[currentUser.username].position = document.getElementById('editPosition').value;
+        currentUser.name = document.getElementById('editFullname').value;
+        currentUser.phone = document.getElementById('editPhone').value;
+        currentUser.position = document.getElementById('editPosition').value;
+        saveAllData();
+        document.getElementById('userNameDisplay').innerHTML = currentUser.name;
+        showModal('Success', 'Profile updated successfully!');
+        hideEditProfile();
+    }
+
+    function showDeleteAccountConfirm() {
+        document.getElementById('deleteAccountModal').style.display = 'flex';
+    }
+
+    function closeDeleteModal() {
+        document.getElementById('deleteAccountModal').style.display = 'none';
+    }
+
+    function confirmDeleteAccount() {
+        closeDeleteModal();
+        delete allUsers[currentUser.username];
+        saveAllData();
+        logout();
+        showModal('Account Deleted', 'Your account has been permanently deleted.');
+    }
+
+    // Auth Functions
+    function showRegister() { document.getElementById('loginScreen').style.display = 'none'; document.getElementById('registerScreen').style.display = 'flex'; }
+    function showLogin() { 
+        document.getElementById('registerScreen').style.display = 'none'; 
+        document.getElementById('forgotScreen').style.display = 'none'; 
+        document.getElementById('changeScreen').style.display = 'none';
+        document.getElementById('editProfileScreen').style.display = 'none';
+        document.getElementById('loginScreen').style.display = 'flex'; 
+    }
+    function showForgot() { document.getElementById('loginScreen').style.display = 'none'; document.getElementById('forgotScreen').style.display = 'flex'; }
+    function showChangePassword() { document.getElementById('changeScreen').style.display = 'flex'; document.getElementById('dashboard').style.display = 'none'; }
+    function hideChange() { document.getElementById('changeScreen').style.display = 'none'; document.getElementById('dashboard').style.display = 'block'; updateStats(); }
+
+    function doRegister() {
+        const fullname = document.getElementById('regFullname').value;
+        const username = document.getElementById('regUsername').value;
+        const email = document.getElementById('regEmail').value;
+        const password = document.getElementById('regPassword').value;
+        const phone = document.getElementById('regPhone').value;
+        const position = document.getElementById('regPosition').value;
+        const security = document.getElementById('regSecurity').value;
+        if (!fullname || !username || !email || !password) { showModal('Error', 'Please fill all required fields'); return; }
+        if (allUsers[username]) { showModal('Error', 'Username already exists'); return; }
+        allUsers[username] = { password, role: 'staff', name: fullname, email, phone, position, approved: false, blocked: false, securityAnswer: security, createdDate: new Date().toLocaleDateString() };
+        saveAllData();
+        showModal('Registration Submitted', 'Your account is pending admin approval.');
+        showLogin();
+    }
+
+    function resetPassword() {
+        const username = document.getElementById('forgotUsername').value;
+        const answer = document.getElementById('forgotAnswer').value;
+        const newPass = document.getElementById('forgotNewPass').value;
+        const user = allUsers[username];
+        if (!user || user.securityAnswer !== answer) { showModal('Error', 'Invalid username or answer'); return; }
+        user.password = newPass;
+        saveAllData();
+        showModal('Success', 'Password reset successfully');
+        showLogin();
+    }
+
+    function changePassword() {
+        const current = document.getElementById('currentPwd').value;
+        const newP = document.getElementById('newPwd').value;
+        const confirm = document.getElementById('confirmPwd').value;
+        if (!current || !newP || !confirm) { showModal('Error', 'Fill all fields'); return; }
+        if (newP !== confirm) { showModal('Error', 'Passwords do not match'); return; }
+        if (current !== currentUser.password) { showModal('Error', 'Current password is incorrect'); return; }
+        allUsers[currentUser.username].password = newP;
+        currentUser.password = newP;
+        saveAllData();
+        showModal('Success', 'Password changed successfully');
+        hideChange();
+    }
+
+    function doLogin() {
+        const username = document.getElementById('loginUsername').value;
+        const password = document.getElementById('loginPassword').value;
+        const user = allUsers[username];
+        
+        if (!user) {
+            showModal('Login Failed', 'Invalid username or password');
+            return;
+        }
+        if (user.password !== password) {
+            showModal('Login Failed', 'Invalid username or password');
+            return;
+        }
+        if (!user.approved) {
+            showModal('Account Pending', 'Your account is waiting for admin approval.');
+            return;
+        }
+        if (user.blocked) {
+            showModal('Account Blocked', 'Your account has been blocked. Contact administrator.');
+            return;
+        }
+        
+        currentUser = { username, ...user };
+        document.getElementById('loginScreen').style.display = 'none';
+        document.getElementById('dashboard').style.display = 'block';
+        document.getElementById('userNameDisplay').innerHTML = user.name;
+        if (user.role === 'admin') document.getElementById('adminPanel').style.display = 'block';
+        updateStats();
+        showModal('Welcome', `Welcome ${user.name}!`);
+    }
+
+    function logout() { 
+        currentUser = null; 
+        document.getElementById('dashboard').style.display = 'none'; 
+        document.getElementById('loginScreen').style.display = 'flex'; 
+        document.getElementById('loginUsername').value = '';
+        document.getElementById('loginPassword').value = '';
+    }
+
+    function updateStats() {
+        document.getElementById('statGate').innerText = allGatePasses.length;
+        document.getElementById('statReq').innerText = allMaterialRequests.length;
+        const active = Object.values(allUsers).filter(u => u.approved && !u.blocked).length;
+        document.getElementById('statUser').innerText = active;
+        document.getElementById('statApp').innerText = allGatePasses.filter(g => g.approved).length;
+    }
+
+    // Gate Pass Functions
+    function showGateForm() { gateItems = [{ name: '', qty: 1, unit: 'Each' }]; renderGateForm(); }
+    function renderGateForm() {
+        let itemsHtml = '';
+        gateItems.forEach((it, idx) => {
+            itemsHtml += `<div class="item-row"><input placeholder="Item Name" value="${it.name}" onchange="updateGateItem(${idx}, 'name', this.value)" class="flex-2"><input type="number" placeholder="Qty" value="${it.qty}" onchange="updateGateItem(${idx}, 'qty', this.value)" class="w-24"><select onchange="updateGateItem(${idx}, 'unit', this.value)" class="w-28">${UNITS.map(u => `<option ${it.unit===u?'selected':''}>${u}</option>`).join('')}</select><button onclick="removeGateItem(${idx})" class="bg-red-500 text-white px-2 rounded">✖</button></div>`;
+        });
+        document.getElementById('contentArea').innerHTML = `
+            <h2 class="text-xl font-bold mb-3">📦 Create Gate Pass</h2>
+            <div class="grid md:grid-cols-2 gap-3 mb-3">
+                <div><label>Department</label><select id="dept">${DEPARTMENTS.map(d => `<option>${d}</option>`).join('')}</select></div>
+                <div><label>Gate Pass Date</label><input type="date" id="date" value="${new Date().toISOString().split('T')[0]}"></div>
+                <div><label>Driver Name</label><input id="driver" placeholder="Driver name"></div>
+                <div><label>Vehicle Number</label><input id="vehicle" placeholder="Vehicle number"></div>
+                <div><label>Vehicle Type</label><select id="vehicleType">${VEHICLE_TYPES.map(v => `<option>${v}</option>`).join('')}</select></div>
+                <div><label>Type</label><select id="type"><option>Incoming</option><option>Outgoing</option></select></div>
+                <div><label>Location</label><select id="loc">${LOCATIONS.map(l => `<option>${l}</option>`).join('')}</select></div>
+            </div>
+            <div class="mt-3"><label class="font-bold">Materials:</label><div id="itemsContainer">${itemsHtml}</div><button onclick="addGateItem()" class="bg-gray-500 text-white px-3 py-1 rounded text-sm mt-1">+ Add Item</button></div>
+            <button onclick="submitGate()" class="btn-primary w-full mt-4 py-2 rounded">Submit Gate Pass</button>
+        `;
+    }
+    function addGateItem() { gateItems.push({ name: '', qty: 1, unit: 'Each' }); renderGateForm(); }
+    function removeGateItem(i) { gateItems.splice(i,1); renderGateForm(); }
+    function updateGateItem(i,f,v) { gateItems[i][f] = v; }
+    function submitGate() {
+        const valid = gateItems.filter(i => i.name.trim());
+        if (valid.length===0) { showModal('Error','Add at least one item'); return; }
+        const id = `GP-${Date.now()}`;
+        const gate = { id, department: document.getElementById('dept').value, gate_date: document.getElementById('date').value, driver_name: document.getElementById('driver').value, vehicle_no: document.getElementById('vehicle').value, vehicle_type: document.getElementById('vehicleType').value, type: document.getElementById('type').value, location: document.getElementById('loc').value, items: valid, approved: false, created_by: currentUser.name, created_at: new Date().toLocaleString() };
+        allGatePasses.push(gate);
+        saveAllData();
+        updateStats();
+        showModal('Success', `Gate Pass ${id} submitted!`);
+        showGateForm();
+    }
+
+    // Material Request Functions
+    function showRequestForm() { reqItems = [{ name: '', qty: 1, unit: 'Each' }]; renderRequestForm(); }
+    function renderRequestForm() {
+        let itemsHtml = '';
+        reqItems.forEach((it, idx) => {
+            itemsHtml += `<div class="item-row"><input placeholder="Item Name" value="${it.name}" onchange="updateReqItem(${idx}, 'name', this.value)" class="flex-2"><input type="number" placeholder="Qty" value="${it.qty}" onchange="updateReqItem(${idx}, 'qty', this.value)" class="w-24"><select onchange="updateReqItem(${idx}, 'unit', this.value)" class="w-28">${UNITS.map(u => `<option ${it.unit===u?'selected':''}>${u}</option>`).join('')}</select><button onclick="removeReqItem(${idx})" class="bg-red-500 text-white px-2 rounded">✖</button></div>`;
+        });
+        document.getElementById('contentArea').innerHTML = `
+            <h2 class="text-xl font-bold mb-3">📄 Create Material Request</h2>
+            <div class="grid md:grid-cols-2 gap-3 mb-3">
+                <div><label>Department</label><select id="dept">${DEPARTMENTS.map(d => `<option>${d}</option>`).join('')}</select></div>
+                <div><label>Request Date</label><input type="date" id="date" value="${new Date().toISOString().split('T')[0]}"></div>
+                <div><label>Project Name</label><input id="projName" placeholder="Project name"></div>
+                <div><label>Project Number</label><input id="projNo" placeholder="Project number"></div>
+                <div><label>Employee Number</label><input id="empNo" placeholder="Employee number"></div>
+            </div>
+            <div class="mt-3"><label class="font-bold">Materials Required:</label><div id="reqItemsContainer">${itemsHtml}</div><button onclick="addReqItem()" class="bg-gray-500 text-white px-3 py-1 rounded text-sm mt-1">+ Add Item</button></div>
+            <button onclick="submitRequest()" class="btn-primary w-full mt-4 py-2 rounded">Submit Material Request</button>
+        `;
+    }
+    function addReqItem() { reqItems.push({ name: '', qty: 1, unit: 'Each' }); renderRequestForm(); }
+    function removeReqItem(i) { reqItems.splice(i,1); renderRequestForm(); }
+    function updateReqItem(i,f,v) { reqItems[i][f] = v; }
+    function submitRequest() {
+        const valid = reqItems.filter(i => i.name.trim());
+        if (valid.length===0) { showModal('Error','Add at least one item'); return; }
+        const id = `MR-${Date.now()}`;
+        const req = { id, department: document.getElementById('dept').value, request_date: document.getElementById('date').value, project_name: document.getElementById('projName').value, project_no: document.getElementById('projNo').value, employee_no: document.getElementById('empNo').value, items: valid, storekeeper_approved: false, pm_approved: false, purchaser_approved: false, admin_approved: false, created_by: currentUser.name, created_at: new Date().toLocaleString() };
+        allMaterialRequests.push(req);
+        saveAllData();
+        updateStats();
+        showModal('Success', `Request ${id} submitted!`);
+        showRequestForm();
+    }
+
+    // All Requests Tracking
+    function showAllRequests() {
+        let all = [];
+        allGatePasses.forEach(g => all.push({ id: g.id, type: 'gate', title: `Gate Pass ${g.id}`, status: g.approved ? 'approved' : 'pending', createdBy: g.created_by, createdAt: g.created_at, details: g, statusText: g.approved ? 'Approved' : 'Pending' }));
+        allMaterialRequests.forEach(r => { const allApp = r.storekeeper_approved && r.pm_approved && r.purchaser_approved && r.admin_approved; all.push({ id: r.id, type: 'material', title: `Material Request ${r.id}`, status: allApp ? 'approved' : 'pending', createdBy: r.created_by, createdAt: r.created_at, details: r, statusText: allApp ? 'Fully Approved' : 'Pending' }); });
+        all.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
+        let filtered = all;
+        if (currentFilter === 'pending') filtered = all.filter(r => r.status === 'pending');
+        else if (currentFilter === 'approved') filtered = all.filter(r => r.status === 'approved');
+        let html = `<div class="mb-4"><div class="flex gap-2 flex-wrap"><div class="filter-btn ${currentFilter==='all'?'active':''}" onclick="setFilter('all')">All (${all.length})</div><div class="filter-btn ${currentFilter==='pending'?'active':''}" onclick="setFilter('pending')">Pending (${all.filter(r=>r.status==='pending').length})</div><div class="filter-btn ${currentFilter==='approved'?'active':''}" onclick="setFilter('approved')">Approved (${all.filter(r=>r.status==='approved').length})</div></div></div><div class="space-y-3">`;
+        if (filtered.length===0) html += '<p class="text-center text-gray-500">No requests found</p>';
+        filtered.forEach(r => {
+            html += `<div class="request-card border rounded-lg p-3 cursor-pointer" onclick="showDetail('${r.id}','${r.type}')"><div class="flex justify-between"><b>${r.title}</b><span class="status-badge ${r.status==='approved'?'status-approved':'status-pending'}">${r.statusText}</span></div><div class="text-sm text-gray-500">${r.createdBy} | ${r.createdAt}</div><div class="text-xs text-blue-500 mt-1">Click for details →</div></div>`;
+        });
+        html += `</div><button onclick="showGateForm()" class="btn-secondary w-full mt-4 py-2 rounded text-white">Back to Dashboard</button>`;
+        document.getElementById('contentArea').innerHTML = html;
+    }
+    function setFilter(f) { currentFilter = f; showAllRequests(); }
+
+    function showDetail(id, type) {
+        if (type === 'gate') {
+            const g = allGatePasses.find(p => p.id === id);
+            let itemsHtml = '<table class="w-full border"><tr class="bg-gray-100"><th class="p-2">Item</th><th class="p-2">Qty</th><th class="p-2">Unit</th></tr>';
+            g.items.forEach(i => itemsHtml += `<tr><td class="border p-2">${i.name}</td><td class="border p-2">${i.qty}</td><td class="border p-2">${i.unit}</td></tr>`);
+            itemsHtml += '</tr>';
+            let approveBtn = (!g.approved && (currentUser.role === 'admin' || currentUser.role === 'gate_approver')) ? `<button onclick="approveGate('${g.id}')" class="bg-green-500 text-white px-3 py-1 rounded mt-2">Approve Gate Pass</button>` : '';
+            const modalContent = `<div><h3 class="font-bold text-lg">Gate Pass ${g.id}</h3><div class="grid grid-cols-2 gap-2 mt-2"><div><strong>Department:</strong> ${g.department}</div><div><strong>Date:</strong> ${g.gate_date}</div><div><strong>Driver:</strong> ${g.driver_name}</div><div><strong>Vehicle:</strong> ${g.vehicle_no}</div><div><strong>Vehicle Type:</strong> ${g.vehicle_type}</div><div><strong>Type:</strong> ${g.type}</div><div><strong>Location:</strong> ${g.location}</div><div><strong>Created:</strong> ${g.created_by}</div></div><div class="mt-2"><strong>Items:</strong></div>${itemsHtml}${approveBtn}</div>`;
+            showModal('Gate Pass Details', modalContent);
+        } else {
+            const r = allMaterialRequests.find(req => req.id === id);
+            let itemsHtml = '<table class="w-full border"><tr class="bg-gray-100"><th class="p-2">Item</th><th class="p-2">Qty</th><th class="p-2">Unit</th></tr>';
+            r.items.forEach(i => itemsHtml += `<tr><td class="border p-2">${i.name}</td><td class="border p-2">${i.qty}</td><td class="border p-2">${i.unit}</td></tr>`);
+            itemsHtml += '</table>';
+            let approveBtns = '';
+            if (currentUser.role === 'admin') {
+                if (!r.storekeeper_approved) approveBtns += `<button onclick="approveStage('${r.id}','storekeeper_approved')" class="bg-gray-600 text-white px-2 py-1 rounded text-sm m-1">Storekeeper</button>`;
+                if (!r.pm_approved) approveBtns += `<button onclick="approveStage('${r.id}','pm_approved')" class="bg-gray-600 text-white px-2 py-1 rounded text-sm m-1">PM</button>`;
+                if (!r.purchaser_approved) approveBtns += `<button onclick="approveStage('${r.id}','purchaser_approved')" class="bg-gray-600 text-white px-2 py-1 rounded text-sm m-1">Purchaser</button>`;
+                if (!r.admin_approved) approveBtns += `<button onclick="approveStage('${r.id}','admin_approved')" class="bg-gray-600 text-white px-2 py-1 rounded text-sm m-1">Admin</button>`;
+            }
+            const allApp = r.storekeeper_approved && r.pm_approved && r.purchaser_approved && r.admin_approved;
+            const modalContent = `<div><h3 class="font-bold text-lg">Material Request ${r.id}</h3><div class="grid grid-cols-2 gap-2 mt-2"><div><strong>Department:</strong> ${r.department}</div><div><strong>Project:</strong> ${r.project_name}</div><div><strong>Project No:</strong> ${r.project_no}</div><div><strong>Employee No:</strong> ${r.employee_no}</div><div><strong>Created:</strong> ${r.created_by}</div></div><div class="mt-2"><strong>Approvals:</strong> Store:${r.storekeeper_approved?'✅':'⏳'} PM:${r.pm_approved?'✅':'⏳'} Purch:${r.purchaser_approved?'✅':'⏳'} Admin:${r.admin_approved?'✅':'⏳'}</div><div class="mt-2"><strong>Items:</strong></div>${itemsHtml}<div class="mt-2">${approveBtns}</div></div>`;
+            showModal('Material Request Details', modalContent);
+        }
+    }
+    function approveGate(id) { const idx = allGatePasses.findIndex(p => p.id === id); if (idx !== -1) { allGatePasses[idx].approved = true; saveAllData(); updateStats(); showModal('Success', 'Gate pass approved!'); showAllRequests(); closeModal(); } }
+    function approveStage(id, field) { const idx = allMaterialRequests.findIndex(r => r.id === id); if (idx !== -1) { allMaterialRequests[idx][field] = true; saveAllData(); updateStats(); showModal('Success', 'Approval completed!'); showAllRequests(); closeModal(); } }
+
+    // Admin: User Management
+    let userSearchTerm = '', userRoleFilter = 'all';
+    function showUsers() {
+        let filteredUsers = Object.entries(allUsers);
+        if (userSearchTerm) {
+            filteredUsers = filteredUsers.filter(([username, user]) => 
+                username.toLowerCase().includes(userSearchTerm.toLowerCase()) ||
+                user.name.toLowerCase().includes(userSearchTerm.toLowerCase()) ||
+                (user.email && user.email.toLowerCase().includes(userSearchTerm.toLowerCase()))
+            );
+        }
+        if (userRoleFilter !== 'all') {
+            filteredUsers = filteredUsers.filter(([username, user]) => user.role === userRoleFilter);
+        }
+        let html = `
+            <div class="flex justify-between items-center mb-4 flex-wrap gap-3">
+                <h2 class="text-xl font-bold" style="color:#1e3a5f;"><i class="fas fa-users mr-2"></i>User Management</h2>
+                <div class="flex gap-2">
+                    <button onclick="exportUsersToCSV()" class="bg-purple-600 text-white px-3 py-1 rounded text-sm"><i class="fas fa-file-csv"></i> Export CSV</button>
+                </div>
+            </div>
+            <div class="search-box"><i class="fas fa-search"></i><input type="text" id="userSearchInput" placeholder="Search by username, name or email..." onkeyup="filterUsers()" class="w-full"></div>
+            <div class="role-filter flex gap-2 flex-wrap mb-4"><span class="role-badge ${userRoleFilter==='all'?'active':''}" onclick="filterByRole('all')">All</span><span class="role-badge ${userRoleFilter==='admin'?'active':''}" onclick="filterByRole('admin')">Admin</span><span class="role-badge ${userRoleFilter==='gate_approver'?'active':''}" onclick="filterByRole('gate_approver')">Gate Approver</span><span class="role-badge ${userRoleFilter==='staff'?'active':''}" onclick="filterByRole('staff')">Staff</span></div>
+            <div class="overflow-x-auto"><table class="user-table"><thead><tr><th>Username</th><th>Name</th><th>Email</th><th>Phone</th><th>Position</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
+        for (const [username, user] of filteredUsers) {
+            const status = user.blocked ? 'Blocked' : (user.approved ? 'Active' : 'Pending');
+            const statusClass = user.blocked ? 'status-blocked' : (user.approved ? 'status-approved' : 'status-pending');
+            html += `<tr><td class="p-2"><strong>${username}</strong></td><td class="p-2">${user.name}</td><td class="p-2">${user.email || '-'}</td><td class="p-2">${user.phone || '-'}</td><td class="p-2">${user.position || '-'}</td><td class="p-2">${user.role}</td><td class="p-2"><span class="status-badge ${statusClass}">${status}</span></td><td class="p-2"><div class="flex gap-1 flex-wrap">${!user.approved ? `<button onclick="approveUser('${username}')" class="bg-green-500 text-white px-2 py-1 rounded text-xs">Approve</button>` : ''}${user.approved && !user.blocked && username !== 'admin' ? `<button onclick="blockUser('${username}')" class="bg-red-500 text-white px-2 py-1 rounded text-xs">Block</button>` : ''}${user.blocked ? `<button onclick="unblockUser('${username}')" class="bg-green-500 text-white px-2 py-1 rounded text-xs">Unblock</button>` : ''}${username !== 'admin' ? `<button onclick="deleteUser('${username}')" class="bg-red-500 text-white px-2 py-1 rounded text-xs">Delete</button>` : ''}<button onclick="editUser('${username}')" class="bg-blue-500 text-white px-2 py-1 rounded text-xs">Edit</button></div></div></tr>`;
+        }
+        html += `</tbody></table></div><div class="mt-4 text-gray-500">Total Users: ${filteredUsers.length}</div><button onclick="showGateForm()" class="btn-secondary mt-4 py-2 px-4 rounded text-white">Back to Dashboard</button>`;
+        document.getElementById('contentArea').innerHTML = html;
+    }
+    function filterUsers() { userSearchTerm = document.getElementById('userSearchInput')?.value || ''; showUsers(); }
+    function filterByRole(role) { userRoleFilter = role; showUsers(); }
+    function exportUsersToCSV() {
+        let csvContent = "Username,Full Name,Email,Phone,Position,Role,Status,Approved,Blocked,Created Date\n";
+        for (const [username, user] of Object.entries(allUsers)) {
+            const status = user.blocked ? 'Blocked' : (user.approved ? 'Active' : 'Pending');
+            csvContent += `"${username}","${user.name}","${user.email || ''}","${user.phone || ''}","${user.position || ''}","${user.role}","${status}",${user.approved},${user.blocked},"${user.createdDate || ''}"\n`;
+        }
+        const blob = new Blob([csvContent], { type: 'text/csv' });
+        const url = URL.createObjectURL(blob);
+        const a = document.createElement('a');
+        a.href = url;
+        a.download = `rawabi_users_${new Date().toISOString().split('T')[0]}.csv`;
+        a.click();
+        URL.revokeObjectURL(url);
+        showModal('Success', 'Users exported to CSV!');
+    }
+    function editUser(username) {
+        const newName = prompt('Enter new full name:', allUsers[username].name);
+        if (newName && newName !== allUsers[username].name) {
+            allUsers[username].name = newName;
+            if (currentUser && currentUser.username === username) currentUser.name = newName;
+            saveAllData();
+            showUsers();
+            document.getElementById('userNameDisplay').innerHTML = currentUser?.name || '';
+            showModal('Success', 'User updated!');
+        }
+    }
+    function approveUser(username) { allUsers[username].approved = true; allUsers[username].blocked = false; saveAllData(); updateStats(); showModal('Success', `User ${username} approved!`); showUsers(); }
+    function blockUser(username) { allUsers[username].blocked = true; saveAllData(); updateStats(); showModal('Success', `User ${username} blocked!`); showUsers(); }
+    function unblockUser(username) { allUsers[username].blocked = false; saveAllData(); updateStats(); showModal('Success', `User ${username} unblocked!`); showUsers(); }
+    function deleteUser(username) { if (confirm(`Delete user "${username}" permanently?`)) { delete allUsers[username]; saveAllData(); updateStats(); showModal('Success', `User ${username} deleted!`); showUsers(); } }
+</script>
+</body>
+</html>
