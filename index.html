@@ -3,23 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rawabi Portal | Real-Time Cross-Computer</title>
+    <title>Rawabi Specialized Contracting | Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
         * { font-family: 'Segoe UI', sans-serif; }
         body { background: linear-gradient(135deg, #1e3a5f 0%, #764ba2 100%); min-height: 100vh; }
         .glass-card { background: white; border-radius: 24px; padding: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-        .btn-primary { background: #f59e0b; }
-        .btn-primary:hover { background: #d97706; }
+        .btn-primary { background: #f59e0b; transition: 0.2s; cursor: pointer; }
+        .btn-primary:hover { background: #d97706; transform: scale(1.02); }
         input, select { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ddd; border-radius: 12px; }
         .item-row { display: flex; gap: 10px; margin-bottom: 10px; }
         .status-badge { padding: 4px 12px; border-radius: 20px; font-size: 12px; }
         .status-approved { background: #d1fae5; color: #065f46; }
         .status-pending { background: #fef3c7; color: #92400e; }
-        .filter-btn { padding: 6px 16px; border-radius: 20px; cursor: pointer; background: #f3f4f6; }
-        .filter-btn.active { background: #f59e0b; color: white; }
         .online-badge { background: #10b981; color: white; padding: 4px 12px; border-radius: 20px; font-size: 11px; }
         .logo { width: 50px; height: 50px; border-radius: 50%; cursor: pointer; border: 2px solid #f59e0b; }
     </style>
@@ -29,9 +26,10 @@
 <div id="loginScreen" class="min-h-screen flex items-center justify-center p-4">
     <div class="glass-card max-w-md w-full text-center">
         <img src="https://placehold.co/80x80/f59e0b/ffffff?text=RSC" id="loginLogo" class="w-20 h-20 rounded-full mx-auto mb-4 cursor-pointer border-2 border-orange-500" onclick="uploadLogo()">
-        <h2 class="text-2xl font-bold">RAWABI Specialized Contracting</h2>
-        <p class="text-gray-500 mb-6">Real-Time Portal</p>
-        <input type="email" id="loginEmail" placeholder="Email" class="w-full">
+        <h2 class="text-2xl font-bold">RAWABI <span class="text-orange-500">Specialized Contracting</span></h2>
+        <p class="text-gray-500 mb-2">????? ????????? ????????</p>
+        <p class="text-gray-500 mb-6">Material Management Portal</p>
+        <input type="text" id="loginUsername" placeholder="Username" class="w-full">
         <input type="password" id="loginPassword" placeholder="Password" class="w-full mt-3">
         <button onclick="doLogin()" class="btn-primary w-full py-2 rounded-xl text-white mt-4">Login</button>
         <div class="flex justify-between mt-4 text-sm">
@@ -45,9 +43,10 @@
     <div class="glass-card max-w-md w-full">
         <h2 class="text-2xl font-bold text-center">Create Account</h2>
         <input type="text" id="regFullname" placeholder="Full Name">
+        <input type="text" id="regUsername" placeholder="Username">
         <input type="email" id="regEmail" placeholder="Email">
         <input type="password" id="regPassword" placeholder="Password">
-        <input type="text" id="regPhone" placeholder="Phone">
+        <input type="text" id="regPhone" placeholder="Phone Number">
         <input type="text" id="regPosition" placeholder="Position">
         <input type="text" id="regSecurity" placeholder="Security Answer">
         <button onclick="doRegister()" class="btn-primary w-full py-2 rounded-xl text-white">Register</button>
@@ -58,11 +57,47 @@
 <div id="forgotScreen" class="min-h-screen flex items-center justify-center p-4" style="display:none;">
     <div class="glass-card max-w-md w-full">
         <h2 class="text-2xl font-bold text-center">Reset Password</h2>
-        <input type="email" id="forgotEmail" placeholder="Email">
+        <input type="text" id="forgotUsername" placeholder="Username">
         <input type="text" id="forgotAnswer" placeholder="Security Answer">
         <input type="password" id="forgotNewPass" placeholder="New Password">
         <button onclick="resetPassword()" class="btn-primary w-full py-2 rounded-xl text-white">Reset</button>
         <button onclick="showLogin()" class="w-full mt-2 py-2 rounded-xl border">Back</button>
+    </div>
+</div>
+
+<div id="changeScreen" class="min-h-screen flex items-center justify-center p-4" style="display:none;">
+    <div class="glass-card max-w-md w-full">
+        <h2 class="text-2xl font-bold text-center">Change Password</h2>
+        <input type="password" id="currentPwd" placeholder="Current Password">
+        <input type="password" id="newPwd" placeholder="New Password">
+        <input type="password" id="confirmPwd" placeholder="Confirm Password">
+        <button onclick="changePassword()" class="btn-primary w-full py-2 rounded-xl text-white">Update</button>
+        <button onclick="hideChange()" class="w-full mt-2 py-2 rounded-xl border">Cancel</button>
+    </div>
+</div>
+
+<div id="editProfileScreen" class="min-h-screen flex items-center justify-center p-4" style="display:none;">
+    <div class="glass-card max-w-md w-full">
+        <h2 class="text-2xl font-bold text-center">Edit Profile</h2>
+        <input type="text" id="editFullname" placeholder="Full Name">
+        <input type="text" id="editPhone" placeholder="Phone Number">
+        <input type="text" id="editPosition" placeholder="Position">
+        <div class="flex gap-3 mt-4">
+            <button onclick="saveProfile()" class="btn-primary flex-1 py-2 rounded-xl text-white">Save</button>
+            <button onclick="hideEditProfile()" class="btn-secondary flex-1 py-2 rounded-xl text-white bg-gray-500">Cancel</button>
+        </div>
+        <button onclick="showDeleteAccountConfirm()" class="bg-red-500 w-full mt-4 py-2 rounded-xl text-white">Delete My Account</button>
+    </div>
+</div>
+
+<div id="deleteAccountModal" class="modal" style="display:none;">
+    <div class="bg-white p-6 rounded-xl max-w-md">
+        <h3 class="text-xl font-bold mb-2">Delete Account</h3>
+        <p class="text-gray-600 mb-4">Are you sure? This cannot be undone.</p>
+        <div class="flex gap-3">
+            <button onclick="confirmDeleteAccount()" class="bg-red-500 flex-1 py-2 rounded-xl text-white">Delete</button>
+            <button onclick="closeDeleteModal()" class="bg-gray-500 flex-1 py-2 rounded-xl text-white">Cancel</button>
+        </div>
     </div>
 </div>
 
@@ -71,12 +106,19 @@
         <div class="flex justify-between items-center bg-white p-4 rounded-xl mb-4">
             <div class="flex items-center gap-3">
                 <img id="headerLogo" src="https://placehold.co/50x50/f59e0b/ffffff?text=RSC" class="logo" onclick="uploadLogo()">
-                <div><h1 class="font-bold">RAWABI Contracting</h1><p class="text-xs text-gray-500">Real-Time Sharing</p></div>
+                <div><h1 class="font-bold">RAWABI Specialized Contracting</h1><p class="text-xs text-gray-500">Complete Material Portal</p></div>
             </div>
             <div class="flex items-center gap-3">
                 <span id="syncStatus" class="online-badge">? Live</span>
                 <span id="userName"></span>
-                <button onclick="logout()" class="bg-red-500 text-white px-3 py-1 rounded text-sm">Logout</button>
+                <div class="relative">
+                    <button onclick="toggleMenu()" class="bg-gray-200 px-3 py-2 rounded-full"><i class="fas fa-user"></i></button>
+                    <div id="userMenu" class="hidden absolute right-0 mt-2 bg-white shadow-lg rounded-lg w-40">
+                        <a onclick="showEditProfile()" class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Edit Profile</a>
+                        <a onclick="showChangePassword()" class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Change Password</a>
+                        <a onclick="logout()" class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Logout</a>
+                    </div>
+                </div>
             </div>
         </div>
 
@@ -110,22 +152,30 @@
 <div id="modal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:1000;"><div class="bg-white p-6 rounded-xl max-w-md"><h3 id="modalTitle" class="font-bold">Message</h3><p id="modalMsg" class="my-3"></p><button onclick="closeModal()" class="btn-primary px-4 py-1 rounded">OK</button></div></div>
 
 <script>
-    // ============ REPLACE WITH YOUR SUPABASE KEYS ============
-    const SUPABASE_URL = 'https://YOUR_PROJECT.supabase.co';
-    const SUPABASE_ANON_KEY = 'YOUR_ANON_KEY';
-    // ========================================================
-
-    const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
     let currentUser = null;
-    let realtimeChannel = null;
-    let currentFilter = 'all';
+    let allGatePasses = JSON.parse(localStorage.getItem('gate_passes') || '[]');
+    let allMaterialRequests = JSON.parse(localStorage.getItem('material_requests') || '[]');
+    let allUsers = JSON.parse(localStorage.getItem('portal_users') || '{}');
     let gateItems = [{ name: '', qty: 1, unit: 'Each' }];
     let reqItems = [{ name: '', qty: 1, unit: 'Each' }];
+    let currentFilter = 'all';
 
     const DEPARTMENTS = ['Civil', 'Electrical', 'Mechanical', 'Mechanic', 'HSE', 'Administrator', 'HR'];
     const LOCATIONS = ['SAMREF', 'Samref Oil Port', 'King Fahd Industrial Port', 'Camp'];
     const VEHICLE_TYPES = ['Pick-up', 'Boom truck', 'Truck', 'Flatbed', 'JCB', 'Crane', 'Diesel tanker'];
-    const UNITS = ['Each', 'Piece', 'Set', 'Box', 'KG', 'Meter', 'Ton'];
+    const UNITS = ['Each', 'Piece', 'Set', 'Packet', 'Load', 'Lot', 'Box', 'Bundle', 'Bottle', 'KG', 'Bag', 'Barrel', 'Carton', 'Cubic Meter', 'Cylinder', 'Feet', 'Gallon', 'Meter', 'Pair', 'Ton'];
+
+    function initData() {
+        if(Object.keys(allUsers).length === 0) {
+            allUsers = {
+                'admin': { password: 'admin123', role: 'admin', name: 'Administrator', email: 'admin@rawabi.com', phone: '+966500000000', position: 'System Admin', approved: true, blocked: false, securityAnswer: 'blue', createdDate: new Date().toLocaleDateString() },
+                'gate.approver': { password: 'approve123', role: 'gate_approver', name: 'Gate Approver', email: 'gate@rawabi.com', phone: '+966500000001', position: 'Gate Approver', approved: true, blocked: false, securityAnswer: 'red', createdDate: new Date().toLocaleDateString() },
+                'ahmed': { password: 'civil123', role: 'staff', name: 'Ahmed Civil', email: 'ahmed@rawabi.com', phone: '+966500000002', position: 'Civil Engineer', approved: true, blocked: false, securityAnswer: 'green', createdDate: new Date().toLocaleDateString() }
+            };
+            localStorage.setItem('portal_users', JSON.stringify(allUsers));
+        }
+    }
+    initData();
 
     function showModal(title, msg) { document.getElementById('modalTitle').innerText = title; document.getElementById('modalMsg').innerHTML = msg; document.getElementById('modal').style.display = 'flex'; }
     function closeModal() { document.getElementById('modal').style.display = 'none'; }
@@ -137,77 +187,86 @@
     }
     const savedLogo = localStorage.getItem('company_logo'); if(savedLogo) { document.getElementById('loginLogo').src = savedLogo; document.getElementById('headerLogo').src = savedLogo; }
 
+    function toggleMenu() { document.getElementById('userMenu').classList.toggle('hidden'); }
     function showRegister() { document.getElementById('loginScreen').style.display = 'none'; document.getElementById('registerScreen').style.display = 'flex'; }
-    function showLogin() { document.getElementById('registerScreen').style.display = 'none'; document.getElementById('forgotScreen').style.display = 'none'; document.getElementById('loginScreen').style.display = 'flex'; }
+    function showLogin() { document.getElementById('registerScreen').style.display = 'none'; document.getElementById('forgotScreen').style.display = 'none'; document.getElementById('changeScreen').style.display = 'none'; document.getElementById('editProfileScreen').style.display = 'none'; document.getElementById('loginScreen').style.display = 'flex'; }
     function showForgot() { document.getElementById('loginScreen').style.display = 'none'; document.getElementById('forgotScreen').style.display = 'flex'; }
+    function showChangePassword() { document.getElementById('changeScreen').style.display = 'flex'; document.getElementById('dashboard').style.display = 'none'; }
+    function hideChange() { document.getElementById('changeScreen').style.display = 'none'; document.getElementById('dashboard').style.display = 'block'; updateStats(); }
+    function showEditProfile() { document.getElementById('editFullname').value = currentUser.name; document.getElementById('editPhone').value = currentUser.phone || ''; document.getElementById('editPosition').value = currentUser.position || ''; document.getElementById('dashboard').style.display = 'none'; document.getElementById('editProfileScreen').style.display = 'flex'; }
+    function hideEditProfile() { document.getElementById('editProfileScreen').style.display = 'none'; document.getElementById('dashboard').style.display = 'block'; updateStats(); }
+    function saveProfile() { currentUser.name = document.getElementById('editFullname').value; currentUser.phone = document.getElementById('editPhone').value; currentUser.position = document.getElementById('editPosition').value; allUsers[currentUser.username].name = currentUser.name; allUsers[currentUser.username].phone = currentUser.phone; allUsers[currentUser.username].position = currentUser.position; localStorage.setItem('portal_users', JSON.stringify(allUsers)); document.getElementById('userName').innerHTML = currentUser.name; showModal('Success', 'Profile updated'); hideEditProfile(); }
+    function showDeleteAccountConfirm() { document.getElementById('deleteAccountModal').style.display = 'flex'; }
+    function closeDeleteModal() { document.getElementById('deleteAccountModal').style.display = 'none'; }
+    function confirmDeleteAccount() { closeDeleteModal(); delete allUsers[currentUser.username]; localStorage.setItem('portal_users', JSON.stringify(allUsers)); logout(); showModal('Account Deleted', 'Your account has been deleted.'); }
 
-    async function doRegister() {
+    function doRegister() {
         const fullname = document.getElementById('regFullname').value;
+        const username = document.getElementById('regUsername').value;
         const email = document.getElementById('regEmail').value;
         const password = document.getElementById('regPassword').value;
         const phone = document.getElementById('regPhone').value;
         const position = document.getElementById('regPosition').value;
         const security = document.getElementById('regSecurity').value;
-        if (!fullname || !email || !password) { showModal('Error', 'Fill all fields'); return; }
-        const { data, error } = await supabase.auth.signUp({ email, password });
-        if (error) { showModal('Error', error.message); return; }
-        await supabase.from('profiles').insert([{ id: data.user.id, full_name: fullname, role: 'staff', approved: false, blocked: false, security_answer: security, phone, position }]);
-        showModal('Success', 'Registration pending admin approval'); showLogin();
+        if(!fullname || !username || !email || !password) { showModal('Error', 'Fill all fields'); return; }
+        if(allUsers[username]) { showModal('Error', 'Username exists'); return; }
+        allUsers[username] = { password, role: 'staff', name: fullname, email, phone, position, approved: false, blocked: false, securityAnswer: security, createdDate: new Date().toLocaleDateString() };
+        localStorage.setItem('portal_users', JSON.stringify(allUsers));
+        showModal('Success', 'Registration submitted. Admin will approve.');
+        showLogin();
     }
 
-    async function resetPassword() {
-        const email = document.getElementById('forgotEmail').value;
+    function resetPassword() {
+        const username = document.getElementById('forgotUsername').value;
         const answer = document.getElementById('forgotAnswer').value;
         const newPass = document.getElementById('forgotNewPass').value;
-        const { data: profile } = await supabase.from('profiles').select('id').eq('email', email).eq('security_answer', answer).single();
-        if (!profile) { showModal('Error', 'Invalid email or answer'); return; }
-        await supabase.auth.admin.updateUserById(profile.id, { password: newPass });
+        const user = allUsers[username];
+        if(!user || user.securityAnswer !== answer) { showModal('Error', 'Invalid username or answer'); return; }
+        user.password = newPass;
+        localStorage.setItem('portal_users', JSON.stringify(allUsers));
         showModal('Success', 'Password reset'); showLogin();
     }
 
-    async function doLogin() {
-        const email = document.getElementById('loginEmail').value;
+    function changePassword() {
+        const current = document.getElementById('currentPwd').value;
+        const newP = document.getElementById('newPwd').value;
+        const confirm = document.getElementById('confirmPwd').value;
+        if(!current || !newP || !confirm) { showModal('Error', 'Fill fields'); return; }
+        if(newP !== confirm) { showModal('Error', 'Passwords do not match'); return; }
+        if(current !== currentUser.password) { showModal('Error', 'Current password incorrect'); return; }
+        allUsers[currentUser.username].password = newP;
+        currentUser.password = newP;
+        localStorage.setItem('portal_users', JSON.stringify(allUsers));
+        showModal('Success', 'Password changed'); hideChange();
+    }
+
+    function doLogin() {
+        const username = document.getElementById('loginUsername').value;
         const password = document.getElementById('loginPassword').value;
-        const { data, error } = await supabase.auth.signInWithPassword({ email, password });
-        if (error) { showModal('Login Failed', error.message); return; }
-        const { data: profile } = await supabase.from('profiles').select('*').eq('id', data.user.id).single();
-        if (!profile.approved) { await supabase.auth.signOut(); showModal('Pending', 'Awaiting admin approval'); return; }
-        if (profile.blocked) { await supabase.auth.signOut(); showModal('Blocked', 'Contact admin'); return; }
-        currentUser = { ...data.user, ...profile };
+        const user = allUsers[username];
+        if(!user || user.password !== password) { showModal('Error', 'Invalid credentials'); return; }
+        if(!user.approved) { showModal('Pending', 'Awaiting admin approval'); return; }
+        if(user.blocked) { showModal('Blocked', 'Account blocked'); return; }
+        currentUser = { username, ...user };
         document.getElementById('loginScreen').style.display = 'none';
         document.getElementById('dashboard').style.display = 'block';
-        document.getElementById('userName').innerHTML = profile.full_name;
-        if (profile.role === 'admin') document.getElementById('adminPanel').style.display = 'block';
-        await loadData();
-        subscribeRealtime();
-        showModal('Welcome', `Welcome ${profile.full_name}! Real-time sharing active.`);
+        document.getElementById('userName').innerHTML = user.name;
+        if(user.role === 'admin') document.getElementById('adminPanel').style.display = 'block';
+        updateStats();
+        showModal('Welcome', `Welcome ${user.name}!`);
     }
 
-    async function logout() { await supabase.auth.signOut(); if(realtimeChannel) realtimeChannel.unsubscribe(); currentUser = null; document.getElementById('dashboard').style.display = 'none'; document.getElementById('loginScreen').style.display = 'flex'; }
+    function logout() { currentUser = null; document.getElementById('dashboard').style.display = 'none'; document.getElementById('loginScreen').style.display = 'flex'; }
 
-    async function loadData() {
-        const { data: gates } = await supabase.from('gate_passes').select('*');
-        const { data: requests } = await supabase.from('material_requests').select('*');
-        document.getElementById('statGate').innerText = gates?.length || 0;
-        document.getElementById('statReq').innerText = requests?.length || 0;
-        const { data: users } = await supabase.from('profiles').select('*');
-        document.getElementById('statUser').innerText = users?.filter(u => u.approved && !u.blocked).length || 0;
-        document.getElementById('statApp').innerText = gates?.filter(g => g.approved).length || 0;
+    function updateStats() {
+        document.getElementById('statGate').innerText = allGatePasses.length;
+        document.getElementById('statReq').innerText = allMaterialRequests.length;
+        const active = Object.values(allUsers).filter(u => u.approved && !u.blocked).length;
+        document.getElementById('statUser').innerText = active;
+        document.getElementById('statApp').innerText = allGatePasses.filter(g => g.approved).length;
     }
 
-    function subscribeRealtime() {
-        if(realtimeChannel) realtimeChannel.unsubscribe();
-        realtimeChannel = supabase.channel('rawabi')
-            .on('postgres_changes', { event: '*', schema: 'public', table: 'gate_passes' }, () => { loadData(); if(document.getElementById('contentArea').innerHTML.includes('All Requests')) showAllRequests(); })
-            .on('postgres_changes', { event: '*', schema: 'public', table: 'material_requests' }, () => { loadData(); if(document.getElementById('contentArea').innerHTML.includes('All Requests')) showAllRequests(); })
-            .on('postgres_changes', { event: '*', schema: 'public', table: 'profiles' }, () => { if(document.getElementById('contentArea').innerHTML.includes('Users')) showUsers(); loadData(); })
-            .subscribe();
-    }
-
-    async function showGateForm() {
-        gateItems = [{ name: '', qty: 1, unit: 'Each' }];
-        renderGateForm();
-    }
+    function showGateForm() { gateItems = [{ name: '', qty: 1, unit: 'Each' }]; renderGateForm(); }
     function renderGateForm() {
         let itemsHtml = '';
         gateItems.forEach((it, idx) => {
@@ -228,20 +287,18 @@
     function addGateItem() { gateItems.push({ name: '', qty: 1, unit: 'Each' }); renderGateForm(); }
     function removeGateItem(i) { gateItems.splice(i,1); renderGateForm(); }
     function updateGateItem(i,f,v) { gateItems[i][f] = v; }
-    async function submitGate() {
+    function submitGate() {
         const valid = gateItems.filter(i => i.name.trim());
         if(valid.length===0) { showModal('Error','Add items'); return; }
         const id = `GP-${Date.now()}`;
-        const gate = { id, requester_id: currentUser.id, requester_name: currentUser.full_name, department: document.getElementById('dept').value, gate_date: document.getElementById('date').value, driver_name: document.getElementById('driver').value, vehicle_no: document.getElementById('vehicle').value, vehicle_type: document.getElementById('vehicleType').value, type: document.getElementById('type').value, location: document.getElementById('loc').value, items: valid, approved: false, created_by: currentUser.full_name };
-        const { error } = await supabase.from('gate_passes').insert([gate]);
-        if(error) showModal('Error', error.message);
-        else { showModal('Success', 'Gate pass submitted!'); showGateForm(); loadData(); }
+        allGatePasses.push({ id, department: document.getElementById('dept').value, gate_date: document.getElementById('date').value, driver_name: document.getElementById('driver').value, vehicle_no: document.getElementById('vehicle').value, vehicle_type: document.getElementById('vehicleType').value, type: document.getElementById('type').value, location: document.getElementById('loc').value, items: valid, approved: false, created_by: currentUser.name, created_at: new Date().toLocaleString() });
+        localStorage.setItem('gate_passes', JSON.stringify(allGatePasses));
+        updateStats();
+        showModal('Success', `Gate Pass ${id} submitted!`);
+        showGateForm();
     }
 
-    async function showRequestForm() {
-        reqItems = [{ name: '', qty: 1, unit: 'Each' }];
-        renderRequestForm();
-    }
+    function showRequestForm() { reqItems = [{ name: '', qty: 1, unit: 'Each' }]; renderRequestForm(); }
     function renderRequestForm() {
         let itemsHtml = '';
         reqItems.forEach((it, idx) => {
@@ -260,94 +317,41 @@
     function addReqItem() { reqItems.push({ name: '', qty: 1, unit: 'Each' }); renderRequestForm(); }
     function removeReqItem(i) { reqItems.splice(i,1); renderRequestForm(); }
     function updateReqItem(i,f,v) { reqItems[i][f] = v; }
-    async function submitRequest() {
+    function submitRequest() {
         const valid = reqItems.filter(i => i.name.trim());
         if(valid.length===0) { showModal('Error','Add items'); return; }
         const id = `MR-${Date.now()}`;
-        const req = { id, requester_id: currentUser.id, requester_name: currentUser.full_name, department: document.getElementById('dept').value, request_date: document.getElementById('date').value, project_name: document.getElementById('projName').value, project_no: document.getElementById('projNo').value, employee_no: document.getElementById('empNo').value, items: valid, storekeeper_approved: false, pm_approved: false, purchaser_approved: false, admin_approved: false, created_by: currentUser.full_name };
-        const { error } = await supabase.from('material_requests').insert([req]);
-        if(error) showModal('Error', error.message);
-        else { showModal('Success', 'Request submitted!'); showRequestForm(); loadData(); }
+        allMaterialRequests.push({ id, department: document.getElementById('dept').value, request_date: document.getElementById('date').value, project_name: document.getElementById('projName').value, project_no: document.getElementById('projNo').value, employee_no: document.getElementById('empNo').value, items: valid, storekeeper_approved: false, pm_approved: false, purchaser_approved: false, admin_approved: false, created_by: currentUser.name, created_at: new Date().toLocaleString() });
+        localStorage.setItem('material_requests', JSON.stringify(allMaterialRequests));
+        updateStats();
+        showModal('Success', `Request ${id} submitted!`);
+        showRequestForm();
     }
 
-    async function showAllRequests() {
-        const { data: gates } = await supabase.from('gate_passes').select('*');
-        const { data: requests } = await supabase.from('material_requests').select('*');
+    function showAllRequests() {
         let all = [];
-        gates?.forEach(g => all.push({ id: g.id, type: 'gate', title: `Gate Pass ${g.id}`, status: g.approved ? 'approved' : 'pending', createdBy: g.created_by, createdAt: g.created_at, details: g }));
-        requests?.forEach(r => { const allApp = r.storekeeper_approved && r.pm_approved && r.purchaser_approved && r.admin_approved; all.push({ id: r.id, type: 'material', title: `Request ${r.id}`, status: allApp ? 'approved' : 'pending', createdBy: r.created_by, createdAt: r.created_at, details: r }); });
+        allGatePasses.forEach(g => all.push({ id: g.id, type: 'gate', title: `Gate Pass ${g.id}`, status: g.approved ? 'approved' : 'pending', createdBy: g.created_by, createdAt: g.created_at, details: g }));
+        allMaterialRequests.forEach(r => { const allApp = r.storekeeper_approved && r.pm_approved && r.purchaser_approved && r.admin_approved; all.push({ id: r.id, type: 'material', title: `Request ${r.id}`, status: allApp ? 'approved' : 'pending', createdBy: r.created_by, createdAt: r.created_at, details: r }); });
         all.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
         let filtered = all;
         if(currentFilter === 'pending') filtered = all.filter(r => r.status === 'pending');
         else if(currentFilter === 'approved') filtered = all.filter(r => r.status === 'approved');
         let html = `<div class="mb-4"><div class="flex gap-2"><div class="filter-btn ${currentFilter==='all'?'active':''}" onclick="setFilter('all')">All (${all.length})</div><div class="filter-btn ${currentFilter==='pending'?'active':''}" onclick="setFilter('pending')">Pending (${all.filter(r=>r.status==='pending').length})</div><div class="filter-btn ${currentFilter==='approved'?'active':''}" onclick="setFilter('approved')">Approved (${all.filter(r=>r.status==='approved').length})</div></div></div><div class="space-y-3">`;
         for(const r of filtered) {
-            html += `<div class="border p-3 rounded cursor-pointer hover:shadow" onclick="showDetail('${r.id}','${r.type}')"><div class="flex justify-between"><b>${r.title}</b><span class="status-badge ${r.status==='approved'?'status-approved':'status-pending'}">${r.status==='approved'?'Approved':'Pending'}</span></div><div class="text-sm">${r.createdBy} | ${new Date(r.createdAt).toLocaleString()}</div></div>`;
+            html += `<div class="border p-3 rounded cursor-pointer hover:shadow" onclick="showDetail('${r.id}','${r.type}')"><div class="flex justify-between"><b>${r.title}</b><span class="status-badge ${r.status==='approved'?'status-approved':'status-pending'}">${r.status==='approved'?'Approved':'Pending'}</span></div><div class="text-sm">${r.createdBy} | ${r.createdAt}</div></div>`;
         }
         html += `</div><button onclick="showGateForm()" class="bg-gray-500 text-white px-4 py-2 rounded mt-4">Back</button>`;
         document.getElementById('contentArea').innerHTML = html;
     }
     function setFilter(f) { currentFilter = f; showAllRequests(); }
 
-    async function showDetail(id, type) {
+    function showDetail(id, type) {
         if(type === 'gate') {
-            const { data: g } = await supabase.from('gate_passes').select('*').eq('id', id).single();
+            const g = allGatePasses.find(p => p.id === id);
             let itemsHtml = '<table class="w-full border"><tr><th>Item</th><th>Qty</th><th>Unit</th></tr>';
-            g.items.forEach(i => itemsHtml += `<td>${i.name}</td><td class="text-center">${i.qty}</td><td>${i.unit}</td></tr>`);
+            g.items.forEach(i => itemsHtml += `<tr><td class="p-2">${i.name}</td><td class="text-center">${i.qty}</td><td class="text-center">${i.unit}</td></tr>`);
             itemsHtml += '</table>';
             let approveBtn = (!g.approved && (currentUser.role === 'admin' || currentUser.role === 'gate_approver')) ? `<button onclick="approveGate('${g.id}')" class="bg-green-500 text-white px-3 py-1 rounded mt-2">Approve</button>` : '';
-            showModal('Gate Pass Details', `<div><h3 class="font-bold">${g.id}</h3><div class="grid grid-cols-2 gap-2 mt-2"><div><b>Dept:</b> ${g.department}</div><div><b>Driver:</b> ${g.driver_name}</div><div><b>Vehicle:</b> ${g.vehicle_no}</div><div><b>Type:</b> ${g.vehicle_type}</div><div><b>Date:</b> ${g.gate_date}</div><div><b>Location:</b> ${g.location}</div></div>${itemsHtml}${approveBtn}</div>`);
+            showModal('Gate Pass Details', `<div><b>${g.id}</b><div class="grid grid-cols-2 gap-2 mt-2"><div><b>Dept:</b> ${g.department}</div><div><b>Driver:</b> ${g.driver_name}</div><div><b>Vehicle:</b> ${g.vehicle_no}</div><div><b>Type:</b> ${g.vehicle_type}</div><div><b>Date:</b> ${g.gate_date}</div><div><b>Location:</b> ${g.location}</div></div>${itemsHtml}${approveBtn}</div>`);
         } else {
-            const { data: r } = await supabase.from('material_requests').select('*').eq('id', id).single();
-            let itemsHtml = '<table class="w-full border"><tr><th>Item</th><th>Qty</th><th>Unit</th><tr>';
-            r.items.forEach(i => itemsHtml += `<td>${i.name}</td><td class="text-center">${i.qty}</td><td>${i.unit}</td></tr>`);
-            itemsHtml += '</table>';
-            let approveBtns = '';
-            if(currentUser.role === 'admin') {
-                if(!r.storekeeper_approved) approveBtns += `<button onclick="approveStage('${r.id}','storekeeper_approved')" class="bg-gray-600 text-white px-2 py-1 rounded text-sm m-1">Storekeeper</button>`;
-                if(!r.pm_approved) approveBtns += `<button onclick="approveStage('${r.id}','pm_approved')" class="bg-gray-600 text-white px-2 py-1 rounded text-sm m-1">PM</button>`;
-                if(!r.purchaser_approved) approveBtns += `<button onclick="approveStage('${r.id}','purchaser_approved')" class="bg-gray-600 text-white px-2 py-1 rounded text-sm m-1">Purchaser</button>`;
-                if(!r.admin_approved) approveBtns += `<button onclick="approveStage('${r.id}','admin_approved')" class="bg-gray-600 text-white px-2 py-1 rounded text-sm m-1">Admin</button>`;
-            }
-            showModal('Request Details', `<div><h3 class="font-bold">${r.id}</h3><div><b>Project:</b> ${r.project_name}</div><div><b>Dept:</b> ${r.department}</div><div><b>Date:</b> ${r.request_date}</div><div class="mt-2"><b>Approvals:</b> Store:${r.storekeeper_approved?'?':'?'} PM:${r.pm_approved?'?':'?'} Purch:${r.purchaser_approved?'?':'?'} Admin:${r.admin_approved?'?':'?'}</div>${itemsHtml}<div class="mt-2">${approveBtns}</div></div>`);
-        }
-    }
-    async function approveGate(id) { await supabase.from('gate_passes').update({ approved: true }).eq('id', id); showModal('Success', 'Gate approved'); showAllRequests(); loadData(); closeModal(); }
-    async function approveStage(id, field) { await supabase.from('material_requests').update({ [field]: true }).eq('id', id); showModal('Success', 'Stage approved'); showAllRequests(); loadData(); closeModal(); }
-
-    async function showUsers() {
-        const { data: users } = await supabase.from('profiles').select('*');
-        let html = '<h2 class="text-xl font-bold mb-3">User Management</h2><div class="overflow-x-auto"><table class="w-full border"><tr class="bg-gray-100"><th class="p-2">Name</th><th class="p-2">Email</th><th class="p-2">Role</th><th class="p-2">Status</th><th class="p-2">Actions</th></tr>';
-        for(const u of users) {
-            const status = u.blocked ? 'Blocked' : (u.approved ? 'Active' : 'Pending');
-            html += `<tr class="border-b"><td class="p-2">${u.full_name}</td><td class="p-2">${u.email || '-'}</td><td class="p-2">${u.role}</td><td class="p-2"><span class="status-badge ${u.blocked ? 'status-blocked' : (u.approved ? 'status-approved' : 'status-pending')}">${status}</span></td><td class="p-2">`;
-            if(!u.approved) html += `<button onclick="approveUser('${u.id}')" class="bg-green-500 text-white px-2 py-1 rounded text-xs mr-1">Approve</button>`;
-            if(u.approved && !u.blocked && u.id !== currentUser.id) html += `<button onclick="blockUser('${u.id}')" class="bg-red-500 text-white px-2 py-1 rounded text-xs">Block</button>`;
-            if(u.blocked) html += `<button onclick="unblockUser('${u.id}')" class="bg-green-500 text-white px-2 py-1 rounded text-xs">Unblock</button>`;
-            html += `</td>`;
-        }
-        html += '</tbody></table><button onclick="showGateForm()" class="mt-4 bg-gray-500 text-white px-4 py-2 rounded">Back</button>';
-        document.getElementById('contentArea').innerHTML = html;
-    }
-    async function approveUser(id) { await supabase.from('profiles').update({ approved: true, blocked: false }).eq('id', id); showModal('Success', 'User approved'); showUsers(); loadData(); }
-    async function blockUser(id) { await supabase.from('profiles').update({ blocked: true }).eq('id', id); showModal('Success', 'User blocked'); showUsers(); loadData(); }
-    async function unblockUser(id) { await supabase.from('profiles').update({ blocked: false }).eq('id', id); showModal('Success', 'User unblocked'); showUsers(); loadData(); }
-
-    (async () => {
-        const { data: { session } } = await supabase.auth.getSession();
-        if(session?.user) {
-            const { data: profile } = await supabase.from('profiles').select('*').eq('id', session.user.id).single();
-            if(profile && profile.approved && !profile.blocked) {
-                currentUser = { ...session.user, ...profile };
-                document.getElementById('loginScreen').style.display = 'none';
-                document.getElementById('dashboard').style.display = 'block';
-                document.getElementById('userName').innerHTML = profile.full_name;
-                if(profile.role === 'admin') document.getElementById('adminPanel').style.display = 'block';
-                await loadData();
-                subscribeRealtime();
-            }
-        }
-    })();
-</script>
-</body>
-</html>
+            const r = allMaterialRequests.find(p
