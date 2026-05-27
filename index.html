@@ -3,63 +3,111 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rawabi Specialized Contracting | Portal</title>
+    <title>Rawabi Specialized Contracting | Complete Portal</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
     <style>
-        * { font-family: 'Segoe UI', sans-serif; }
-        body { background: linear-gradient(135deg, #1e3a5f 0%, #764ba2 100%); min-height: 100vh; }
-        .glass-card { background: white; border-radius: 24px; padding: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
-        .btn-primary { background: #f59e0b; transition: 0.2s; cursor: pointer; }
-        .btn-primary:hover { background: #d97706; }
-        input, select { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ddd; border-radius: 12px; }
-        .item-row { display: flex; gap: 10px; margin-bottom: 10px; }
+        * { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
+        
+        /* Purple & White Professional Theme */
+        body { background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%); min-height: 100vh; }
+        
+        .glass-card { background: white; border-radius: 20px; padding: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.2s; border: 1px solid #f3e8ff; }
+        .glass-card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        
+        .btn-primary { background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%); transition: 0.2s; cursor: pointer; }
+        .btn-primary:hover { background: linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%); transform: scale(1.02); }
+        
+        .btn-secondary { background: #9ca3af; transition: 0.2s; cursor: pointer; }
+        .btn-secondary:hover { background: #6b7280; transform: scale(1.02); }
+        
+        .btn-danger { background: #ef4444; transition: 0.2s; cursor: pointer; }
+        .btn-danger:hover { background: #dc2626; transform: scale(1.02); }
+        
+        .btn-success { background: #10b981; transition: 0.2s; cursor: pointer; }
+        .btn-success:hover { background: #059669; transform: scale(1.02); }
+        
+        .btn-outline { background: transparent; border: 2px solid #7c3aed; color: #7c3aed; transition: 0.2s; cursor: pointer; }
+        .btn-outline:hover { background: #7c3aed; color: white; transform: scale(1.02); }
+        
+        input, select { width: 100%; padding: 10px 12px; margin: 8px 0; border: 1px solid #e5e7eb; border-radius: 12px; transition: 0.2s; font-size: 14px; background: white; }
+        input:focus, select:focus { outline: none; border-color: #7c3aed; box-shadow: 0 0 0 3px rgba(124,58,237,0.1); }
+        
+        .item-row { display: flex; gap: 12px; margin-bottom: 12px; align-items: center; }
+        .item-row input, .item-row select { margin: 0; }
+        
         .status-badge { padding: 4px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; }
         .status-approved { background: #d1fae5; color: #065f46; }
         .status-pending { background: #fef3c7; color: #92400e; }
         .status-blocked { background: #fee2e2; color: #991b1b; }
-        .filter-btn { padding: 6px 16px; border-radius: 20px; cursor: pointer; background: #f3f4f6; }
-        .filter-btn.active { background: #f59e0b; color: white; }
-        .logo-preview { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; cursor: pointer; border: 2px solid #f59e0b; }
-        .company-name-ar { font-size: 12px; color: #666; }
+        
+        .filter-btn { padding: 6px 16px; border-radius: 20px; cursor: pointer; background: white; border: 1px solid #e5e7eb; transition: 0.2s; font-size: 13px; }
+        .filter-btn.active { background: #7c3aed; color: white; border-color: #7c3aed; }
+        
+        .header { background: white; padding: 16px 24px; border-radius: 16px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 1px solid #f3e8ff; }
+        
+        .stat-card { background: white; border-radius: 16px; padding: 20px; text-align: center; transition: 0.2s; border-left: 4px solid #7c3aed; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .stat-card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
+        
+        .logo { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; cursor: pointer; border: 2px solid #7c3aed; transition: 0.2s; }
+        .logo:hover { transform: scale(1.05); border-color: #6d28d9; }
+        
+        .company-name-ar { font-size: 12px; color: #6b7280; }
+        
         .dropdown { position: relative; display: inline-block; }
-        .dropdown-content { display: none; position: absolute; right: 0; top: 100%; background-color: white; min-width: 180px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); border-radius: 10px; z-index: 50; margin-top: 5px; }
-        .dropdown-content a { color: #333; padding: 10px 16px; text-decoration: none; display: block; cursor: pointer; border-radius: 10px; }
-        .dropdown-content a:hover { background-color: #f3f4f6; }
+        .dropdown-content { display: none; position: absolute; right: 0; top: 100%; background-color: white; min-width: 200px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); border-radius: 12px; z-index: 50; margin-top: 8px; overflow: hidden; border: 1px solid #f3e8ff; }
+        .dropdown-content a { color: #4b5563; padding: 12px 16px; text-decoration: none; display: block; cursor: pointer; transition: 0.2s; }
+        .dropdown-content a:hover { background-color: #f3e8ff; color: #7c3aed; }
         .dropdown:hover .dropdown-content { display: block; }
+        
         .user-table { width: 100%; border-collapse: collapse; }
-        .user-table th, .user-table td { padding: 10px; border-bottom: 1px solid #e5e7eb; text-align: left; }
-        .user-table th { background: #f3f4f6; }
+        .user-table th, .user-table td { padding: 14px 12px; border-bottom: 1px solid #e5e7eb; text-align: left; }
+        .user-table th { background: #faf5ff; color: #6d28d9; font-weight: 600; }
+        .user-table tr:hover { background: #faf5ff; }
+        
         .search-box { position: relative; margin-bottom: 20px; }
         .search-box i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #9ca3af; }
         .search-box input { padding-left: 35px; }
+        
+        .request-card { transition: 0.2s; cursor: pointer; border: 1px solid #e5e7eb; border-radius: 12px; margin-bottom: 12px; padding: 16px; background: white; }
+        .request-card:hover { transform: translateX(5px); box-shadow: 0 5px 15px rgba(0,0,0,0.08); border-color: #7c3aed; background: #faf5ff; }
+        
+        .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 1000; }
+        .modal-content { background: white; max-width: 550px; width: 90%; padding: 28px; border-radius: 24px; max-height: 85vh; overflow-y: auto; }
+        
+        .role-badge { padding: 5px 12px; border-radius: 20px; cursor: pointer; background: white; border: 1px solid #e5e7eb; font-size: 12px; transition: 0.2s; }
+        .role-badge.active { background: #7c3aed; color: white; border-color: #7c3aed; }
+        
+        .login-container { background: white; border-radius: 24px; padding: 32px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
     </style>
 </head>
 <body>
 
 <!-- Login Screen -->
 <div id="loginScreen" class="min-h-screen flex items-center justify-center p-4">
-    <div class="glass-card max-w-md w-full text-center">
+    <div class="login-container max-w-md w-full text-center">
         <div class="flex justify-center mb-4">
-            <img id="loginLogo" src="https://placehold.co/80x80/f59e0b/ffffff?text=RSC" class="w-20 h-20 rounded-full border-2 border-orange-500 cursor-pointer" onclick="uploadLogo()">
+            <img id="loginLogo" src="https://placehold.co/80x80/7c3aed/ffffff?text=RSC" class="w-20 h-20 rounded-full cursor-pointer border-2 border-purple-500" onclick="uploadLogo()">
         </div>
-        <h2 class="text-2xl font-bold" style="color:#1e3a5f;">RAWABI <span style="color:#f59e0b;">Specialized Contracting</span></h2>
-        <p class="company-name-ar text-gray-500 mb-2">روابي للمقاولات المتخصصة</p>
-        <p class="text-gray-500 mb-6">Material Management Portal</p>
+        <h2 class="text-2xl font-bold" style="color:#6d28d9;">RAWABI <span style="color:#7c3aed;">Specialized Contracting</span></h2>
+        <p class="company-name-ar text-gray-500 mb-2">????? ????????? ????????</p>
+        <p class="text-gray-500 mb-6">Complete Material Management Portal</p>
         <input type="text" id="loginUsername" placeholder="Username" class="w-full">
         <input type="password" id="loginPassword" placeholder="Password" class="w-full mt-3">
-        <button onclick="doLogin()" class="btn-primary w-full py-2 rounded-xl text-white font-semibold mt-4">Login</button>
+        <button onclick="doLogin()" class="btn-primary w-full py-3 rounded-xl text-white font-semibold mt-4">Login</button>
         <div class="flex justify-between mt-4 text-sm">
-            <a href="#" onclick="showRegister()" class="text-orange-500 hover:underline">Create Account</a>
-            <a href="#" onclick="showForgot()" class="text-orange-500 hover:underline">Forgot Password?</a>
+            <a href="#" onclick="showRegister()" class="text-purple-600 hover:underline">Create Account</a>
+            <a href="#" onclick="showForgot()" class="text-purple-600 hover:underline">Forgot Password?</a>
         </div>
     </div>
 </div>
 
 <!-- Register Screen -->
 <div id="registerScreen" class="min-h-screen flex items-center justify-center p-4" style="display:none;">
-    <div class="glass-card max-w-md w-full">
-        <h2 class="text-2xl font-bold text-center" style="color:#1e3a5f;">Create Account</h2>
+    <div class="login-container max-w-md w-full">
+        <h2 class="text-2xl font-bold text-center" style="color:#6d28d9;">Create Account</h2>
         <input type="text" id="regFullname" placeholder="Full Name">
         <input type="text" id="regUsername" placeholder="Username">
         <input type="email" id="regEmail" placeholder="Email">
@@ -67,60 +115,60 @@
         <input type="text" id="regPhone" placeholder="Phone Number">
         <input type="text" id="regPosition" placeholder="Position / Job Title">
         <input type="text" id="regSecurity" placeholder="Security Answer (e.g., favorite color)">
-        <button onclick="doRegister()" class="btn-primary w-full py-2 rounded-xl text-white font-semibold">Register</button>
-        <button onclick="showLogin()" class="w-full mt-2 py-2 rounded-xl border">Back to Login</button>
+        <button onclick="doRegister()" class="btn-primary w-full py-3 rounded-xl text-white font-semibold mt-3">Register</button>
+        <button onclick="showLogin()" class="w-full mt-3 py-3 rounded-xl border border-gray-300 bg-white text-gray-700 hover:bg-gray-50">Back to Login</button>
     </div>
 </div>
 
-<!-- Forgot Screen -->
+<!-- Forgot Password Screen -->
 <div id="forgotScreen" class="min-h-screen flex items-center justify-center p-4" style="display:none;">
-    <div class="glass-card max-w-md w-full">
-        <h2 class="text-2xl font-bold text-center" style="color:#1e3a5f;">Reset Password</h2>
+    <div class="login-container max-w-md w-full">
+        <h2 class="text-2xl font-bold text-center" style="color:#6d28d9;">Reset Password</h2>
         <input type="text" id="forgotUsername" placeholder="Username">
         <input type="text" id="forgotAnswer" placeholder="Security Answer">
         <input type="password" id="forgotNewPass" placeholder="New Password">
-        <button onclick="resetPassword()" class="btn-primary w-full py-2 rounded-xl text-white font-semibold">Reset Password</button>
-        <button onclick="showLogin()" class="w-full mt-2 py-2 rounded-xl border">Back to Login</button>
+        <button onclick="resetPassword()" class="btn-primary w-full py-3 rounded-xl text-white font-semibold">Reset Password</button>
+        <button onclick="showLogin()" class="w-full mt-3 py-3 rounded-xl border border-gray-300 bg-white text-gray-700 hover:bg-gray-50">Back to Login</button>
     </div>
 </div>
 
 <!-- Change Password Screen -->
 <div id="changeScreen" class="min-h-screen flex items-center justify-center p-4" style="display:none;">
-    <div class="glass-card max-w-md w-full">
-        <h2 class="text-2xl font-bold text-center" style="color:#1e3a5f;">Change Password</h2>
+    <div class="login-container max-w-md w-full">
+        <h2 class="text-2xl font-bold text-center" style="color:#6d28d9;">Change Password</h2>
         <input type="password" id="currentPwd" placeholder="Current Password">
         <input type="password" id="newPwd" placeholder="New Password">
         <input type="password" id="confirmPwd" placeholder="Confirm Password">
-        <button onclick="changePassword()" class="btn-primary w-full py-2 rounded-xl text-white font-semibold">Update Password</button>
-        <button onclick="hideChange()" class="w-full mt-2 py-2 rounded-xl border">Cancel</button>
+        <button onclick="changePassword()" class="btn-primary w-full py-3 rounded-xl text-white font-semibold">Update Password</button>
+        <button onclick="hideChange()" class="w-full mt-3 py-3 rounded-xl border border-gray-300 bg-white text-gray-700 hover:bg-gray-50">Cancel</button>
     </div>
 </div>
 
 <!-- Edit Profile Screen -->
 <div id="editProfileScreen" class="min-h-screen flex items-center justify-center p-4" style="display:none;">
-    <div class="glass-card max-w-md w-full">
-        <h2 class="text-2xl font-bold text-center" style="color:#1e3a5f;">Edit Profile</h2>
+    <div class="login-container max-w-md w-full">
+        <h2 class="text-2xl font-bold text-center" style="color:#6d28d9;">Edit Profile</h2>
         <input type="text" id="editFullname" placeholder="Full Name">
         <input type="text" id="editPhone" placeholder="Phone Number">
         <input type="text" id="editPosition" placeholder="Position / Job Title">
         <div class="flex gap-3 mt-4">
-            <button onclick="saveProfile()" class="btn-primary flex-1 py-2 rounded-xl text-white font-semibold">Save Changes</button>
-            <button onclick="hideEditProfile()" class="btn-secondary flex-1 py-2 rounded-xl text-white font-semibold bg-gray-500">Cancel</button>
+            <button onclick="saveProfile()" class="btn-primary flex-1 py-3 rounded-xl text-white font-semibold">Save Changes</button>
+            <button onclick="hideEditProfile()" class="btn-secondary flex-1 py-3 rounded-xl text-white font-semibold">Cancel</button>
         </div>
-        <button onclick="showDeleteAccountConfirm()" class="bg-red-500 w-full mt-4 py-2 rounded-xl text-white font-semibold"><i class="fas fa-trash"></i> Delete My Account</button>
+        <button onclick="showDeleteAccountConfirm()" class="btn-danger w-full mt-4 py-3 rounded-xl text-white font-semibold"><i class="fas fa-trash mr-2"></i> Delete My Account</button>
     </div>
 </div>
 
 <!-- Delete Account Confirm Modal -->
-<div id="deleteAccountModal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:1000;">
-    <div class="bg-white p-6 rounded-xl max-w-md">
+<div id="deleteAccountModal" class="modal">
+    <div class="modal-content">
         <div class="text-center">
             <i class="fas fa-exclamation-triangle text-6xl text-red-500 mb-4"></i>
             <h3 class="text-xl font-bold mb-2">Delete Account</h3>
-            <p class="text-gray-600 mb-4">Are you sure you want to delete your account? This action cannot be undone.</p>
+            <p class="text-gray-600 mb-4">Are you sure you want to delete your account? This action cannot be undone. All your data will be permanently deleted.</p>
             <div class="flex gap-3">
-                <button onclick="confirmDeleteAccount()" class="bg-red-500 flex-1 py-2 rounded-xl text-white">Yes, Delete</button>
-                <button onclick="closeDeleteModal()" class="bg-gray-500 flex-1 py-2 rounded-xl text-white">Cancel</button>
+                <button onclick="confirmDeleteAccount()" class="btn-danger flex-1 py-3 rounded-xl text-white font-semibold">Yes, Delete</button>
+                <button onclick="closeDeleteModal()" class="btn-secondary flex-1 py-3 rounded-xl text-white font-semibold">Cancel</button>
             </div>
         </div>
     </div>
@@ -129,19 +177,20 @@
 <!-- Dashboard -->
 <div id="dashboard" style="display:none;">
     <div class="container mx-auto p-4">
-        <div class="header bg-white p-4 rounded-xl mb-4 flex justify-between items-center flex-wrap gap-3">
+        <div class="header">
             <div class="flex items-center gap-3">
-                <img id="headerLogo" src="https://placehold.co/50x50/f59e0b/ffffff?text=RSC" class="logo-preview" onclick="uploadLogo()">
+                <img id="headerLogo" src="https://placehold.co/50x50/7c3aed/ffffff?text=RSC" class="logo" onclick="uploadLogo()">
                 <div>
-                    <h1 class="text-xl font-bold" style="color:#1e3a5f;">RAWABI <span style="color:#f59e0b;">Specialized Contracting</span></h1>
-                    <p class="company-name-ar text-gray-500">روابي للمقاولات المتخصصة</p>
-                    <p class="text-xs text-gray-500">Material Management Portal</p>
+                    <h1 class="text-xl font-bold" style="color:#6d28d9;">RAWABI <span style="color:#7c3aed;">Specialized Contracting</span></h1>
+                    <p class="company-name-ar text-gray-500">????? ????????? ????????</p>
+                    <p class="text-xs text-gray-500">Complete Material Management Portal</p>
                 </div>
             </div>
             <div class="flex items-center gap-3">
+                <span id="syncStatus" class="bg-green-500 text-white px-3 py-1 rounded-full text-xs">? Live</span>
                 <span id="userNameDisplay" class="font-medium"></span>
                 <div class="dropdown">
-                    <button class="bg-gray-200 px-3 py-2 rounded-full"><i class="fas fa-user-circle text-xl"></i></button>
+                    <button class="bg-gray-100 px-3 py-2 rounded-full hover:bg-gray-200"><i class="fas fa-user-circle text-xl text-purple-600"></i></button>
                     <div class="dropdown-content">
                         <a onclick="showEditProfile()"><i class="fas fa-user-edit mr-2"></i> Edit Profile</a>
                         <a onclick="showChangePassword()"><i class="fas fa-key mr-2"></i> Change Password</a>
@@ -152,39 +201,39 @@
         </div>
 
         <!-- Stats Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-4 gap-4 mb-6">
-            <div class="bg-white rounded-xl p-4 text-center border-l-4 border-orange-500"><i class="fas fa-truck text-3xl text-orange-500"></i><h3 id="statGate" class="text-2xl font-bold mt-2">0</h3><p class="text-gray-500">Gate Passes</p></div>
-            <div class="bg-white rounded-xl p-4 text-center border-l-4 border-orange-500"><i class="fas fa-clipboard-list text-3xl text-blue-500"></i><h3 id="statReq" class="text-2xl font-bold mt-2">0</h3><p class="text-gray-500">Material Requests</p></div>
-            <div class="bg-white rounded-xl p-4 text-center border-l-4 border-orange-500"><i class="fas fa-users text-3xl text-green-500"></i><h3 id="statUser" class="text-2xl font-bold mt-2">0</h3><p class="text-gray-500">Active Users</p></div>
-            <div class="bg-white rounded-xl p-4 text-center border-l-4 border-orange-500"><i class="fas fa-check-circle text-3xl text-purple-500"></i><h3 id="statApp" class="text-2xl font-bold mt-2">0</h3><p class="text-gray-500">Approved</p></div>
+        <div class="grid grid-cols-1 md:grid-cols-4 gap-5 mb-6">
+            <div class="stat-card"><i class="fas fa-truck text-3xl text-purple-500"></i><h3 id="statGate" class="text-2xl font-bold mt-2">0</h3><p class="text-gray-500">Gate Passes</p></div>
+            <div class="stat-card"><i class="fas fa-clipboard-list text-3xl text-purple-500"></i><h3 id="statReq" class="text-2xl font-bold mt-2">0</h3><p class="text-gray-500">Material Requests</p></div>
+            <div class="stat-card"><i class="fas fa-users text-3xl text-purple-500"></i><h3 id="statUser" class="text-2xl font-bold mt-2">0</h3><p class="text-gray-500">Active Users</p></div>
+            <div class="stat-card"><i class="fas fa-check-circle text-3xl text-purple-500"></i><h3 id="statApp" class="text-2xl font-bold mt-2">0</h3><p class="text-gray-500">Approved</p></div>
         </div>
 
         <!-- Action Cards -->
-        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
-            <div class="glass-card text-center cursor-pointer" onclick="showGateForm()"><i class="fas fa-truck text-5xl text-orange-500 mb-3"></i><h3 class="font-bold">Material Gate Pass</h3><p class="text-xs text-gray-500">Create Gate Pass</p></div>
-            <div class="glass-card text-center cursor-pointer" onclick="showRequestForm()"><i class="fas fa-clipboard-list text-5xl text-blue-500 mb-3"></i><h3 class="font-bold">Material Request</h3><p class="text-xs text-gray-500">Request Materials</p></div>
-            <div class="glass-card text-center cursor-pointer" onclick="showAllRequests()"><i class="fas fa-chart-line text-5xl text-green-500 mb-3"></i><h3 class="font-bold">All Requests</h3><p class="text-xs text-gray-500">Track & Approve</p></div>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
+            <div class="glass-card text-center cursor-pointer hover:border-purple-300" onclick="showGateForm()"><i class="fas fa-truck text-5xl text-purple-500 mb-3"></i><h3 class="font-bold">Material Gate Pass</h3><p class="text-xs text-gray-500">Create Gate Pass</p></div>
+            <div class="glass-card text-center cursor-pointer hover:border-purple-300" onclick="showRequestForm()"><i class="fas fa-clipboard-list text-5xl text-purple-500 mb-3"></i><h3 class="font-bold">Material Request</h3><p class="text-xs text-gray-500">Request Materials</p></div>
+            <div class="glass-card text-center cursor-pointer hover:border-purple-300" onclick="showAllRequests()"><i class="fas fa-chart-line text-5xl text-purple-500 mb-3"></i><h3 class="font-bold">All Requests</h3><p class="text-xs text-gray-500">Track & Approve</p></div>
         </div>
 
         <!-- Admin Panel -->
-        <div id="adminPanel" class="bg-white rounded-xl p-4 mb-6" style="display:none;">
-            <h3 class="font-bold mb-3"><i class="fas fa-shield-alt text-orange-500"></i> Admin Controls</h3>
-            <div class="flex gap-2 flex-wrap">
-                <button onclick="showUsers()" class="bg-gray-800 text-white px-3 py-1 rounded text-sm">👥 Manage Users</button>
-                <button onclick="exportAllData()" class="bg-green-600 text-white px-3 py-1 rounded text-sm">📤 Export Data</button>
-                <button onclick="importDataPrompt()" class="bg-blue-600 text-white px-3 py-1 rounded text-sm">📥 Import Data</button>
-                <button onclick="uploadLogo()" class="bg-orange-600 text-white px-3 py-1 rounded text-sm">🖼️ Change Logo</button>
+        <div id="adminPanel" class="glass-card mb-6" style="display:none;">
+            <h3 class="font-bold mb-3" style="color:#6d28d9;"><i class="fas fa-shield-alt text-purple-500"></i> Admin Controls</h3>
+            <div class="flex gap-3 flex-wrap">
+                <button onclick="showUsers()" class="bg-gray-800 text-white px-4 py-2 rounded-lg text-sm hover:bg-gray-700">?? Manage Users</button>
+                <button onclick="exportAllData()" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-700">?? Export Data</button>
+                <button onclick="importDataPrompt()" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700">?? Import Data</button>
+                <button onclick="uploadLogo()" class="bg-purple-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-purple-700">??? Change Logo</button>
             </div>
         </div>
 
         <!-- Content Area -->
-        <div id="contentArea" class="bg-white rounded-xl p-6 min-h-[350px]">
+        <div id="contentArea" class="glass-card min-h-[350px]">
             <p class="text-center text-gray-500">Select an option above</p>
         </div>
     </div>
 </div>
 
-<div id="modal" class="modal" style="display:none; position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(0,0,0,0.5); justify-content:center; align-items:center; z-index:1000;"><div class="bg-white p-6 rounded-xl max-w-md"><h3 id="modalTitle" class="font-bold">Message</h3><p id="modalMsg" class="my-3"></p><button onclick="closeModal()" class="btn-primary px-4 py-1 rounded">OK</button></div></div>
+<div id="modal" class="modal"><div class="modal-content"><h3 id="modalTitle" class="font-bold text-lg">Message</h3><p id="modalMsg" class="my-3 text-gray-600"></p><button onclick="closeModal()" class="btn-primary px-5 py-2 rounded-lg text-white">OK</button></div></div>
 
 <script>
     // ============ DATA STORAGE ============
@@ -309,6 +358,28 @@
         input.click();
     }
 
+    // PDF Export for Approved Gate Passes
+    async function generateGatePDF(id) {
+        const gate = allGatePasses.find(g => g.id === id);
+        if (!gate) return;
+        const { jsPDF } = window.jspdf;
+        const doc = new jsPDF();
+        const logo = document.getElementById('headerLogo').src;
+        if (logo && logo !== 'https://placehold.co/50x50/7c3aed/ffffff?text=RSC') {
+            try { doc.addImage(logo, 'JPEG', 15, 10, 25, 25); } catch(e) {}
+        }
+        doc.setFontSize(18); doc.text("RAWABI SPECIALIZED CONTRACTING", 45, 20);
+        doc.setFontSize(10); doc.text("Gate Pass - Approved", 45, 28);
+        doc.setFontSize(12); doc.text(`ID: ${gate.id}`, 20, 45);
+        doc.text(`Department: ${gate.department} | Date: ${gate.gate_date}`, 20, 55);
+        doc.text(`Driver: ${gate.driver_name} | Vehicle: ${gate.vehicle_no} (${gate.vehicle_type})`, 20, 65);
+        doc.text(`Type: ${gate.type} | Location: ${gate.location}`, 20, 75);
+        doc.text(`Approved By: ${gate.approved_by || 'Admin'} | Approved Date: ${gate.approved_at || new Date().toLocaleString()}`, 20, 85);
+        doc.autoTable({ startY: 95, head: [["#", "Item", "Unit", "Qty", "Remarks"]], body: gate.items.map((it, i) => [i+1, it.name, it.unit, it.qty, it.remarks || '-']) });
+        doc.save(`GatePass_${gate.id}.pdf`);
+        showModal('Success', 'PDF generated successfully!');
+    }
+
     // Profile Functions
     function showEditProfile() {
         document.getElementById('editFullname').value = currentUser.name || '';
@@ -413,22 +484,10 @@
         const password = document.getElementById('loginPassword').value;
         const user = allUsers[username];
         
-        if (!user) {
-            showModal('Login Failed', 'Invalid username or password');
-            return;
-        }
-        if (user.password !== password) {
-            showModal('Login Failed', 'Invalid username or password');
-            return;
-        }
-        if (!user.approved) {
-            showModal('Account Pending', 'Your account is waiting for admin approval.');
-            return;
-        }
-        if (user.blocked) {
-            showModal('Account Blocked', 'Your account has been blocked. Contact administrator.');
-            return;
-        }
+        if (!user) { showModal('Login Failed', 'Invalid username or password'); return; }
+        if (user.password !== password) { showModal('Login Failed', 'Invalid username or password'); return; }
+        if (!user.approved) { showModal('Account Pending', 'Your account is waiting for admin approval.'); return; }
+        if (user.blocked) { showModal('Account Blocked', 'Your account has been blocked. Contact administrator.'); return; }
         
         currentUser = { username, ...user };
         document.getElementById('loginScreen').style.display = 'none';
@@ -460,11 +519,11 @@
     function renderGateForm() {
         let itemsHtml = '';
         gateItems.forEach((it, idx) => {
-            itemsHtml += `<div class="item-row"><input placeholder="Item Name" value="${it.name}" onchange="updateGateItem(${idx}, 'name', this.value)" class="flex-2"><input type="number" placeholder="Qty" value="${it.qty}" onchange="updateGateItem(${idx}, 'qty', this.value)" class="w-24"><select onchange="updateGateItem(${idx}, 'unit', this.value)" class="w-28">${UNITS.map(u => `<option ${it.unit===u?'selected':''}>${u}</option>`).join('')}</select><button onclick="removeGateItem(${idx})" class="bg-red-500 text-white px-2 rounded">✖</button></div>`;
+            itemsHtml += `<div class="item-row"><input placeholder="Item Name" value="${it.name}" onchange="updateGateItem(${idx}, 'name', this.value)" class="flex-2"><input type="number" placeholder="Qty" value="${it.qty}" onchange="updateGateItem(${idx}, 'qty', this.value)" class="w-24"><select onchange="updateGateItem(${idx}, 'unit', this.value)" class="w-28">${UNITS.map(u => `<option ${it.unit===u?'selected':''}>${u}</option>`).join('')}</select><button onclick="removeGateItem(${idx})" class="bg-red-500 text-white px-3 rounded">?</button></div>`;
         });
         document.getElementById('contentArea').innerHTML = `
-            <h2 class="text-xl font-bold mb-3">📦 Create Gate Pass</h2>
-            <div class="grid md:grid-cols-2 gap-3 mb-3">
+            <h2 class="text-xl font-bold mb-4">?? Create Gate Pass</h2>
+            <div class="grid md:grid-cols-2 gap-4 mb-4">
                 <div><label>Department</label><select id="dept">${DEPARTMENTS.map(d => `<option>${d}</option>`).join('')}</select></div>
                 <div><label>Gate Pass Date</label><input type="date" id="date" value="${new Date().toISOString().split('T')[0]}"></div>
                 <div><label>Driver Name</label><input id="driver" placeholder="Driver name"></div>
@@ -473,8 +532,8 @@
                 <div><label>Type</label><select id="type"><option>Incoming</option><option>Outgoing</option></select></div>
                 <div><label>Location</label><select id="loc">${LOCATIONS.map(l => `<option>${l}</option>`).join('')}</select></div>
             </div>
-            <div class="mt-3"><label class="font-bold">Materials:</label><div id="itemsContainer">${itemsHtml}</div><button onclick="addGateItem()" class="bg-gray-500 text-white px-3 py-1 rounded text-sm mt-1">+ Add Item</button></div>
-            <button onclick="submitGate()" class="btn-primary w-full mt-4 py-2 rounded">Submit Gate Pass</button>
+            <div class="mt-3"><label class="font-bold">Materials:</label><div id="itemsContainer">${itemsHtml}</div><button onclick="addGateItem()" class="bg-gray-500 text-white px-4 py-2 rounded text-sm mt-2">+ Add Item</button></div>
+            <button onclick="submitGate()" class="btn-primary w-full mt-4 py-3 rounded-lg font-bold">Submit Gate Pass</button>
         `;
     }
     function addGateItem() { gateItems.push({ name: '', qty: 1, unit: 'Each' }); renderGateForm(); }
@@ -497,19 +556,19 @@
     function renderRequestForm() {
         let itemsHtml = '';
         reqItems.forEach((it, idx) => {
-            itemsHtml += `<div class="item-row"><input placeholder="Item Name" value="${it.name}" onchange="updateReqItem(${idx}, 'name', this.value)" class="flex-2"><input type="number" placeholder="Qty" value="${it.qty}" onchange="updateReqItem(${idx}, 'qty', this.value)" class="w-24"><select onchange="updateReqItem(${idx}, 'unit', this.value)" class="w-28">${UNITS.map(u => `<option ${it.unit===u?'selected':''}>${u}</option>`).join('')}</select><button onclick="removeReqItem(${idx})" class="bg-red-500 text-white px-2 rounded">✖</button></div>`;
+            itemsHtml += `<div class="item-row"><input placeholder="Item Name" value="${it.name}" onchange="updateReqItem(${idx}, 'name', this.value)" class="flex-2"><input type="number" placeholder="Qty" value="${it.qty}" onchange="updateReqItem(${idx}, 'qty', this.value)" class="w-24"><select onchange="updateReqItem(${idx}, 'unit', this.value)" class="w-28">${UNITS.map(u => `<option ${it.unit===u?'selected':''}>${u}</option>`).join('')}</select><button onclick="removeReqItem(${idx})" class="bg-red-500 text-white px-3 rounded">?</button></div>`;
         });
         document.getElementById('contentArea').innerHTML = `
-            <h2 class="text-xl font-bold mb-3">📄 Create Material Request</h2>
-            <div class="grid md:grid-cols-2 gap-3 mb-3">
+            <h2 class="text-xl font-bold mb-4">?? Create Material Request</h2>
+            <div class="grid md:grid-cols-2 gap-4 mb-4">
                 <div><label>Department</label><select id="dept">${DEPARTMENTS.map(d => `<option>${d}</option>`).join('')}</select></div>
                 <div><label>Request Date</label><input type="date" id="date" value="${new Date().toISOString().split('T')[0]}"></div>
                 <div><label>Project Name</label><input id="projName" placeholder="Project name"></div>
                 <div><label>Project Number</label><input id="projNo" placeholder="Project number"></div>
                 <div><label>Employee Number</label><input id="empNo" placeholder="Employee number"></div>
             </div>
-            <div class="mt-3"><label class="font-bold">Materials Required:</label><div id="reqItemsContainer">${itemsHtml}</div><button onclick="addReqItem()" class="bg-gray-500 text-white px-3 py-1 rounded text-sm mt-1">+ Add Item</button></div>
-            <button onclick="submitRequest()" class="btn-primary w-full mt-4 py-2 rounded">Submit Material Request</button>
+            <div class="mt-3"><label class="font-bold">Materials Required:</label><div id="reqItemsContainer">${itemsHtml}</div><button onclick="addReqItem()" class="bg-gray-500 text-white px-4 py-2 rounded text-sm mt-2">+ Add Item</button></div>
+            <button onclick="submitRequest()" class="btn-primary w-full mt-4 py-3 rounded-lg font-bold">Submit Material Request</button>
         `;
     }
     function addReqItem() { reqItems.push({ name: '', qty: 1, unit: 'Each' }); renderRequestForm(); }
@@ -531,17 +590,17 @@
     function showAllRequests() {
         let all = [];
         allGatePasses.forEach(g => all.push({ id: g.id, type: 'gate', title: `Gate Pass ${g.id}`, status: g.approved ? 'approved' : 'pending', createdBy: g.created_by, createdAt: g.created_at, details: g, statusText: g.approved ? 'Approved' : 'Pending' }));
-        allMaterialRequests.forEach(r => { const allApp = r.storekeeper_approved && r.pm_approved && r.purchaser_approved && r.admin_approved; all.push({ id: r.id, type: 'material', title: `Material Request ${r.id}`, status: allApp ? 'approved' : 'pending', createdBy: r.created_by, createdAt: r.created_at, details: r, statusText: allApp ? 'Fully Approved' : 'Pending' }); });
+        allMaterialRequests.forEach(r => { const allApp = r.storekeeper_approved && r.pm_approved && r.purchaser_approved && r.admin_approved; all.push({ id: r.id, type: 'material', title: `Request ${r.id}`, status: allApp ? 'approved' : 'pending', createdBy: r.created_by, createdAt: r.created_at, details: r, statusText: allApp ? 'Fully Approved' : 'Pending' }); });
         all.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
         let filtered = all;
         if (currentFilter === 'pending') filtered = all.filter(r => r.status === 'pending');
         else if (currentFilter === 'approved') filtered = all.filter(r => r.status === 'approved');
-        let html = `<div class="mb-4"><div class="flex gap-2 flex-wrap"><div class="filter-btn ${currentFilter==='all'?'active':''}" onclick="setFilter('all')">All (${all.length})</div><div class="filter-btn ${currentFilter==='pending'?'active':''}" onclick="setFilter('pending')">Pending (${all.filter(r=>r.status==='pending').length})</div><div class="filter-btn ${currentFilter==='approved'?'active':''}" onclick="setFilter('approved')">Approved (${all.filter(r=>r.status==='approved').length})</div></div></div><div class="space-y-3">`;
-        if (filtered.length===0) html += '<p class="text-center text-gray-500">No requests found</p>';
+        let html = `<div class="mb-5"><div class="flex gap-2 flex-wrap"><div class="filter-btn ${currentFilter==='all'?'active':''}" onclick="setFilter('all')">All (${all.length})</div><div class="filter-btn ${currentFilter==='pending'?'active':''}" onclick="setFilter('pending')">Pending (${all.filter(r=>r.status==='pending').length})</div><div class="filter-btn ${currentFilter==='approved'?'active':''}" onclick="setFilter('approved')">Approved (${all.filter(r=>r.status==='approved').length})</div></div></div><div class="space-y-3">`;
+        if (filtered.length===0) html += '<p class="text-center text-gray-500 py-8">No requests found</p>';
         filtered.forEach(r => {
-            html += `<div class="request-card border rounded-lg p-3 cursor-pointer" onclick="showDetail('${r.id}','${r.type}')"><div class="flex justify-between"><b>${r.title}</b><span class="status-badge ${r.status==='approved'?'status-approved':'status-pending'}">${r.statusText}</span></div><div class="text-sm text-gray-500">${r.createdBy} | ${r.createdAt}</div><div class="text-xs text-blue-500 mt-1">Click for details →</div></div>`;
+            html += `<div class="request-card" onclick="showDetail('${r.id}','${r.type}')"><div class="flex justify-between items-start"><div><b class="text-lg">${r.title}</b><div class="text-sm text-gray-500 mt-1">${r.createdBy} | ${r.createdAt}</div></div><span class="status-badge ${r.status==='approved'?'status-approved':'status-pending'}">${r.statusText}</span></div><div class="text-xs text-purple-500 mt-2">Click for details ?</div></div>`;
         });
-        html += `</div><button onclick="showGateForm()" class="btn-secondary w-full mt-4 py-2 rounded text-white">Back to Dashboard</button>`;
+        html += `</div><button onclick="showGateForm()" class="btn-secondary w-full mt-5 py-2 rounded-lg text-white">Back to Dashboard</button>`;
         document.getElementById('contentArea').innerHTML = html;
     }
     function setFilter(f) { currentFilter = f; showAllRequests(); }
@@ -549,31 +608,54 @@
     function showDetail(id, type) {
         if (type === 'gate') {
             const g = allGatePasses.find(p => p.id === id);
-            let itemsHtml = '<table class="w-full border"><tr class="bg-gray-100"><th class="p-2">Item</th><th class="p-2">Qty</th><th class="p-2">Unit</th></tr>';
-            g.items.forEach(i => itemsHtml += `<tr><td class="border p-2">${i.name}</td><td class="border p-2">${i.qty}</td><td class="border p-2">${i.unit}</td></tr>`);
-            itemsHtml += '</tr>';
-            let approveBtn = (!g.approved && (currentUser.role === 'admin' || currentUser.role === 'gate_approver')) ? `<button onclick="approveGate('${g.id}')" class="bg-green-500 text-white px-3 py-1 rounded mt-2">Approve Gate Pass</button>` : '';
-            const modalContent = `<div><h3 class="font-bold text-lg">Gate Pass ${g.id}</h3><div class="grid grid-cols-2 gap-2 mt-2"><div><strong>Department:</strong> ${g.department}</div><div><strong>Date:</strong> ${g.gate_date}</div><div><strong>Driver:</strong> ${g.driver_name}</div><div><strong>Vehicle:</strong> ${g.vehicle_no}</div><div><strong>Vehicle Type:</strong> ${g.vehicle_type}</div><div><strong>Type:</strong> ${g.type}</div><div><strong>Location:</strong> ${g.location}</div><div><strong>Created:</strong> ${g.created_by}</div></div><div class="mt-2"><strong>Items:</strong></div>${itemsHtml}${approveBtn}</div>`;
+            let itemsHtml = '<table class="w-full border mt-3"><tr class="bg-gray-100"><th class="p-2 border">Item</th><th class="p-2 border">Qty</th><th class="p-2 border">Unit</th><th class="p-2 border">Remarks</th></tr>';
+            g.items.forEach(i => itemsHtml += `<tr><td class="p-2 border">${i.name}</td><td class="p-2 border text-center">${i.qty}</td><td class="p-2 border">${i.unit}</td><td class="p-2 border">${i.remarks || '-'}</td></tr>`);
+            itemsHtml += '</table>';
+            let approveBtn = (!g.approved && (currentUser.role === 'admin' || currentUser.role === 'gate_approver')) ? `<button onclick="approveGate('${g.id}')" class="btn-success text-white px-4 py-2 rounded-lg mt-3">? Approve Gate Pass</button>` : '';
+            let pdfBtn = (g.approved) ? `<button onclick="generateGatePDF('${g.id}')" class="bg-purple-600 text-white px-4 py-2 rounded-lg mt-3 ml-2"><i class="fas fa-file-pdf mr-1"></i> Export PDF</button>` : '';
+            const modalContent = `<div><h3 class="font-bold text-xl">Gate Pass ${g.id}</h3><div class="grid grid-cols-2 gap-3 mt-3"><div><strong>Department:</strong> ${g.department}</div><div><strong>Date:</strong> ${g.gate_date}</div><div><strong>Driver:</strong> ${g.driver_name}</div><div><strong>Vehicle:</strong> ${g.vehicle_no}</div><div><strong>Vehicle Type:</strong> ${g.vehicle_type}</div><div><strong>Type:</strong> ${g.type}</div><div><strong>Location:</strong> ${g.location}</div><div><strong>Created By:</strong> ${g.created_by}</div><div><strong>Created At:</strong> ${g.created_at}</div><div><strong>Status:</strong> <span class="status-badge ${g.approved?'status-approved':'status-pending'}">${g.approved?'Approved':'Pending'}</span></div></div><div class="mt-3"><strong>Items:</strong></div>${itemsHtml}<div class="flex mt-3">${approveBtn}${pdfBtn}</div></div>`;
             showModal('Gate Pass Details', modalContent);
         } else {
             const r = allMaterialRequests.find(req => req.id === id);
-            let itemsHtml = '<table class="w-full border"><tr class="bg-gray-100"><th class="p-2">Item</th><th class="p-2">Qty</th><th class="p-2">Unit</th></tr>';
-            r.items.forEach(i => itemsHtml += `<tr><td class="border p-2">${i.name}</td><td class="border p-2">${i.qty}</td><td class="border p-2">${i.unit}</td></tr>`);
-            itemsHtml += '</table>';
+            let itemsHtml = '<table class="w-full border mt-3"><tr class="bg-gray-100"><th class="p-2 border">Item</th><th class="p-2 border">Qty</th><th class="p-2 border">Unit</th><th class="p-2 border">Remarks</th></tr>';
+            r.items.forEach(i => itemsHtml += `<tr><td class="p-2 border">${i.name}</td><td class="p-2 border text-center">${i.qty}</td><td class="p-2 border">${i.unit}</td><td class="p-2 border">${i.remarks || '-'}</td></tr>`);
+            itemsHtml += '</tbody></table>';
             let approveBtns = '';
             if (currentUser.role === 'admin') {
-                if (!r.storekeeper_approved) approveBtns += `<button onclick="approveStage('${r.id}','storekeeper_approved')" class="bg-gray-600 text-white px-2 py-1 rounded text-sm m-1">Storekeeper</button>`;
-                if (!r.pm_approved) approveBtns += `<button onclick="approveStage('${r.id}','pm_approved')" class="bg-gray-600 text-white px-2 py-1 rounded text-sm m-1">PM</button>`;
-                if (!r.purchaser_approved) approveBtns += `<button onclick="approveStage('${r.id}','purchaser_approved')" class="bg-gray-600 text-white px-2 py-1 rounded text-sm m-1">Purchaser</button>`;
-                if (!r.admin_approved) approveBtns += `<button onclick="approveStage('${r.id}','admin_approved')" class="bg-gray-600 text-white px-2 py-1 rounded text-sm m-1">Admin</button>`;
+                if (!r.storekeeper_approved) approveBtns += `<button onclick="approveStage('${r.id}','storekeeper_approved')" class="bg-gray-600 text-white px-3 py-1 rounded text-sm m-1">Storekeeper</button>`;
+                if (!r.pm_approved) approveBtns += `<button onclick="approveStage('${r.id}','pm_approved')" class="bg-gray-600 text-white px-3 py-1 rounded text-sm m-1">PM</button>`;
+                if (!r.purchaser_approved) approveBtns += `<button onclick="approveStage('${r.id}','purchaser_approved')" class="bg-gray-600 text-white px-3 py-1 rounded text-sm m-1">Purchaser</button>`;
+                if (!r.admin_approved) approveBtns += `<button onclick="approveStage('${r.id}','admin_approved')" class="bg-gray-600 text-white px-3 py-1 rounded text-sm m-1">Admin</button>`;
             }
             const allApp = r.storekeeper_approved && r.pm_approved && r.purchaser_approved && r.admin_approved;
-            const modalContent = `<div><h3 class="font-bold text-lg">Material Request ${r.id}</h3><div class="grid grid-cols-2 gap-2 mt-2"><div><strong>Department:</strong> ${r.department}</div><div><strong>Project:</strong> ${r.project_name}</div><div><strong>Project No:</strong> ${r.project_no}</div><div><strong>Employee No:</strong> ${r.employee_no}</div><div><strong>Created:</strong> ${r.created_by}</div></div><div class="mt-2"><strong>Approvals:</strong> Store:${r.storekeeper_approved?'✅':'⏳'} PM:${r.pm_approved?'✅':'⏳'} Purch:${r.purchaser_approved?'✅':'⏳'} Admin:${r.admin_approved?'✅':'⏳'}</div><div class="mt-2"><strong>Items:</strong></div>${itemsHtml}<div class="mt-2">${approveBtns}</div></div>`;
+            const modalContent = `<div><h3 class="font-bold text-xl">Material Request ${r.id}</h3><div class="grid grid-cols-2 gap-3 mt-3"><div><strong>Department:</strong> ${r.department}</div><div><strong>Project:</strong> ${r.project_name}</div><div><strong>Project No:</strong> ${r.project_no}</div><div><strong>Employee No:</strong> ${r.employee_no}</div><div><strong>Created By:</strong> ${r.created_by}</div><div><strong>Created At:</strong> ${r.created_at}</div></div><div class="mt-3"><strong>Approvals:</strong><div class="grid grid-cols-2 gap-2 mt-1">Storekeeper: ${r.storekeeper_approved?'?':'?'} | PM: ${r.pm_approved?'?':'?'} | Purchaser: ${r.purchaser_approved?'?':'?'} | Admin: ${r.admin_approved?'?':'?'}</div></div><div class="mt-3"><strong>Items:</strong></div>${itemsHtml}<div class="mt-3">${approveBtns}</div></div>`;
             showModal('Material Request Details', modalContent);
         }
     }
-    function approveGate(id) { const idx = allGatePasses.findIndex(p => p.id === id); if (idx !== -1) { allGatePasses[idx].approved = true; saveAllData(); updateStats(); showModal('Success', 'Gate pass approved!'); showAllRequests(); closeModal(); } }
-    function approveStage(id, field) { const idx = allMaterialRequests.findIndex(r => r.id === id); if (idx !== -1) { allMaterialRequests[idx][field] = true; saveAllData(); updateStats(); showModal('Success', 'Approval completed!'); showAllRequests(); closeModal(); } }
+    function approveGate(id) { 
+        const idx = allGatePasses.findIndex(p => p.id === id); 
+        if (idx !== -1) { 
+            allGatePasses[idx].approved = true; 
+            allGatePasses[idx].approved_by = currentUser.name;
+            allGatePasses[idx].approved_at = new Date().toLocaleString();
+            saveAllData(); 
+            updateStats(); 
+            showModal('Success', 'Gate pass approved!'); 
+            showAllRequests(); 
+            closeModal(); 
+        } 
+    }
+    function approveStage(id, field) { 
+        const idx = allMaterialRequests.findIndex(r => r.id === id); 
+        if (idx !== -1) { 
+            allMaterialRequests[idx][field] = true; 
+            saveAllData(); 
+            updateStats(); 
+            showModal('Success', 'Approval completed!'); 
+            showAllRequests(); 
+            closeModal(); 
+        } 
+    }
 
     // Admin: User Management
     let userSearchTerm = '', userRoleFilter = 'all';
@@ -591,20 +673,23 @@
         }
         let html = `
             <div class="flex justify-between items-center mb-4 flex-wrap gap-3">
-                <h2 class="text-xl font-bold" style="color:#1e3a5f;"><i class="fas fa-users mr-2"></i>User Management</h2>
-                <div class="flex gap-2">
-                    <button onclick="exportUsersToCSV()" class="bg-purple-600 text-white px-3 py-1 rounded text-sm"><i class="fas fa-file-csv"></i> Export CSV</button>
-                </div>
+                <h2 class="text-xl font-bold" style="color:#6d28d9;"><i class="fas fa-users mr-2"></i>User Management</h2>
+                <button onclick="exportUsersToCSV()" class="bg-purple-600 text-white px-4 py-2 rounded-lg text-sm"><i class="fas fa-file-csv mr-1"></i> Export CSV</button>
             </div>
             <div class="search-box"><i class="fas fa-search"></i><input type="text" id="userSearchInput" placeholder="Search by username, name or email..." onkeyup="filterUsers()" class="w-full"></div>
-            <div class="role-filter flex gap-2 flex-wrap mb-4"><span class="role-badge ${userRoleFilter==='all'?'active':''}" onclick="filterByRole('all')">All</span><span class="role-badge ${userRoleFilter==='admin'?'active':''}" onclick="filterByRole('admin')">Admin</span><span class="role-badge ${userRoleFilter==='gate_approver'?'active':''}" onclick="filterByRole('gate_approver')">Gate Approver</span><span class="role-badge ${userRoleFilter==='staff'?'active':''}" onclick="filterByRole('staff')">Staff</span></div>
+            <div class="flex gap-2 flex-wrap mb-4"><span class="role-badge ${userRoleFilter==='all'?'active':''}" onclick="filterByRole('all')">All</span><span class="role-badge ${userRoleFilter==='admin'?'active':''}" onclick="filterByRole('admin')">Admin</span><span class="role-badge ${userRoleFilter==='gate_approver'?'active':''}" onclick="filterByRole('gate_approver')">Gate Approver</span><span class="role-badge ${userRoleFilter==='staff'?'active':''}" onclick="filterByRole('staff')">Staff</span></div>
             <div class="overflow-x-auto"><table class="user-table"><thead><tr><th>Username</th><th>Name</th><th>Email</th><th>Phone</th><th>Position</th><th>Role</th><th>Status</th><th>Actions</th></tr></thead><tbody>`;
         for (const [username, user] of filteredUsers) {
             const status = user.blocked ? 'Blocked' : (user.approved ? 'Active' : 'Pending');
             const statusClass = user.blocked ? 'status-blocked' : (user.approved ? 'status-approved' : 'status-pending');
-            html += `<tr><td class="p-2"><strong>${username}</strong></td><td class="p-2">${user.name}</td><td class="p-2">${user.email || '-'}</td><td class="p-2">${user.phone || '-'}</td><td class="p-2">${user.position || '-'}</td><td class="p-2">${user.role}</td><td class="p-2"><span class="status-badge ${statusClass}">${status}</span></td><td class="p-2"><div class="flex gap-1 flex-wrap">${!user.approved ? `<button onclick="approveUser('${username}')" class="bg-green-500 text-white px-2 py-1 rounded text-xs">Approve</button>` : ''}${user.approved && !user.blocked && username !== 'admin' ? `<button onclick="blockUser('${username}')" class="bg-red-500 text-white px-2 py-1 rounded text-xs">Block</button>` : ''}${user.blocked ? `<button onclick="unblockUser('${username}')" class="bg-green-500 text-white px-2 py-1 rounded text-xs">Unblock</button>` : ''}${username !== 'admin' ? `<button onclick="deleteUser('${username}')" class="bg-red-500 text-white px-2 py-1 rounded text-xs">Delete</button>` : ''}<button onclick="editUser('${username}')" class="bg-blue-500 text-white px-2 py-1 rounded text-xs">Edit</button></div></div></tr>`;
+            html += `<tr><td class="p-2"><strong>${username}</strong></td><td class="p-2">${user.name}</td><td class="p-2">${user.email || '-'}</td><td class="p-2">${user.phone || '-'}</td><td class="p-2">${user.position || '-'}</td><td class="p-2">${user.role}</td><td class="p-2"><span class="status-badge ${statusClass}">${status}</span></td><td class="p-2"><div class="flex gap-1 flex-wrap">`;
+            if (!user.approved) html += `<button onclick="approveUser('${username}')" class="bg-green-500 text-white px-2 py-1 rounded text-xs">Approve</button>`;
+            if (user.approved && !user.blocked && username !== 'admin') html += `<button onclick="blockUser('${username}')" class="bg-red-500 text-white px-2 py-1 rounded text-xs">Block</button>`;
+            if (user.blocked) html += `<button onclick="unblockUser('${username}')" class="bg-yellow-500 text-white px-2 py-1 rounded text-xs">Unblock</button>`;
+            if (username !== 'admin') html += `<button onclick="deleteUser('${username}')" class="bg-red-500 text-white px-2 py-1 rounded text-xs">Delete</button>`;
+            html += `</div></div></tr>`;
         }
-        html += `</tbody></table></div><div class="mt-4 text-gray-500">Total Users: ${filteredUsers.length}</div><button onclick="showGateForm()" class="btn-secondary mt-4 py-2 px-4 rounded text-white">Back to Dashboard</button>`;
+        html += `</tbody></table></div><div class="mt-4 text-gray-500">Total Users: ${filteredUsers.length}</div><button onclick="showGateForm()" class="btn-secondary mt-5 py-2 px-5 rounded-lg text-white">Back to Dashboard</button>`;
         document.getElementById('contentArea').innerHTML = html;
     }
     function filterUsers() { userSearchTerm = document.getElementById('userSearchInput')?.value || ''; showUsers(); }
@@ -623,17 +708,6 @@
         a.click();
         URL.revokeObjectURL(url);
         showModal('Success', 'Users exported to CSV!');
-    }
-    function editUser(username) {
-        const newName = prompt('Enter new full name:', allUsers[username].name);
-        if (newName && newName !== allUsers[username].name) {
-            allUsers[username].name = newName;
-            if (currentUser && currentUser.username === username) currentUser.name = newName;
-            saveAllData();
-            showUsers();
-            document.getElementById('userNameDisplay').innerHTML = currentUser?.name || '';
-            showModal('Success', 'User updated!');
-        }
     }
     function approveUser(username) { allUsers[username].approved = true; allUsers[username].blocked = false; saveAllData(); updateStats(); showModal('Success', `User ${username} approved!`); showUsers(); }
     function blockUser(username) { allUsers[username].blocked = true; saveAllData(); updateStats(); showModal('Success', `User ${username} blocked!`); showUsers(); }
