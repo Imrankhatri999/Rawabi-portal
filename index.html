@@ -11,21 +11,19 @@
         body { background: linear-gradient(135deg, #1e3a5f 0%, #764ba2 100%); min-height: 100vh; }
         .glass-card { background: white; border-radius: 24px; padding: 20px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
         .btn-primary { background: #f59e0b; transition: 0.2s; cursor: pointer; }
-        .btn-primary:hover { background: #d97706; transform: scale(1.02); }
+        .btn-primary:hover { background: #d97706; }
         input, select { width: 100%; padding: 10px; margin: 8px 0; border: 1px solid #ddd; border-radius: 12px; }
         .item-row { display: flex; gap: 10px; margin-bottom: 10px; }
         .status-badge { padding: 4px 12px; border-radius: 20px; font-size: 12px; }
         .status-approved { background: #d1fae5; color: #065f46; }
         .status-pending { background: #fef3c7; color: #92400e; }
-        .online-badge { background: #10b981; color: white; padding: 4px 12px; border-radius: 20px; font-size: 11px; }
-        .logo { width: 50px; height: 50px; border-radius: 50%; cursor: pointer; border: 2px solid #f59e0b; }
     </style>
 </head>
 <body>
 
+<!-- Login Screen -->
 <div id="loginScreen" class="min-h-screen flex items-center justify-center p-4">
     <div class="glass-card max-w-md w-full text-center">
-        <img src="https://placehold.co/80x80/f59e0b/ffffff?text=RSC" id="loginLogo" class="w-20 h-20 rounded-full mx-auto mb-4 cursor-pointer border-2 border-orange-500" onclick="uploadLogo()">
         <h2 class="text-2xl font-bold">RAWABI <span class="text-orange-500">Specialized Contracting</span></h2>
         <p class="text-gray-500 mb-2">????? ????????? ????????</p>
         <p class="text-gray-500 mb-6">Material Management Portal</p>
@@ -36,9 +34,11 @@
             <a href="#" onclick="showRegister()" class="text-orange-500">Create Account</a>
             <a href="#" onclick="showForgot()" class="text-orange-500">Forgot Password?</a>
         </div>
+        <p class="text-xs text-gray-400 mt-4">Demo: admin / admin123 | gate.approver / approve123 | ahmed / civil123</p>
     </div>
 </div>
 
+<!-- Register Screen -->
 <div id="registerScreen" class="min-h-screen flex items-center justify-center p-4" style="display:none;">
     <div class="glass-card max-w-md w-full">
         <h2 class="text-2xl font-bold text-center">Create Account</h2>
@@ -46,14 +46,13 @@
         <input type="text" id="regUsername" placeholder="Username">
         <input type="email" id="regEmail" placeholder="Email">
         <input type="password" id="regPassword" placeholder="Password">
-        <input type="text" id="regPhone" placeholder="Phone Number">
-        <input type="text" id="regPosition" placeholder="Position">
         <input type="text" id="regSecurity" placeholder="Security Answer">
         <button onclick="doRegister()" class="btn-primary w-full py-2 rounded-xl text-white">Register</button>
         <button onclick="showLogin()" class="w-full mt-2 py-2 rounded-xl border">Back</button>
     </div>
 </div>
 
+<!-- Forgot Screen -->
 <div id="forgotScreen" class="min-h-screen flex items-center justify-center p-4" style="display:none;">
     <div class="glass-card max-w-md w-full">
         <h2 class="text-2xl font-bold text-center">Reset Password</h2>
@@ -65,68 +64,15 @@
     </div>
 </div>
 
-<div id="changeScreen" class="min-h-screen flex items-center justify-center p-4" style="display:none;">
-    <div class="glass-card max-w-md w-full">
-        <h2 class="text-2xl font-bold text-center">Change Password</h2>
-        <input type="password" id="currentPwd" placeholder="Current Password">
-        <input type="password" id="newPwd" placeholder="New Password">
-        <input type="password" id="confirmPwd" placeholder="Confirm Password">
-        <button onclick="changePassword()" class="btn-primary w-full py-2 rounded-xl text-white">Update</button>
-        <button onclick="hideChange()" class="w-full mt-2 py-2 rounded-xl border">Cancel</button>
-    </div>
-</div>
-
-<div id="editProfileScreen" class="min-h-screen flex items-center justify-center p-4" style="display:none;">
-    <div class="glass-card max-w-md w-full">
-        <h2 class="text-2xl font-bold text-center">Edit Profile</h2>
-        <input type="text" id="editFullname" placeholder="Full Name">
-        <input type="text" id="editPhone" placeholder="Phone Number">
-        <input type="text" id="editPosition" placeholder="Position">
-        <div class="flex gap-3 mt-4">
-            <button onclick="saveProfile()" class="btn-primary flex-1 py-2 rounded-xl text-white">Save</button>
-            <button onclick="hideEditProfile()" class="btn-secondary flex-1 py-2 rounded-xl text-white bg-gray-500">Cancel</button>
-        </div>
-        <button onclick="showDeleteAccountConfirm()" class="bg-red-500 w-full mt-4 py-2 rounded-xl text-white">Delete My Account</button>
-    </div>
-</div>
-
-<div id="deleteAccountModal" class="modal" style="display:none;">
-    <div class="bg-white p-6 rounded-xl max-w-md">
-        <h3 class="text-xl font-bold mb-2">Delete Account</h3>
-        <p class="text-gray-600 mb-4">Are you sure? This cannot be undone.</p>
-        <div class="flex gap-3">
-            <button onclick="confirmDeleteAccount()" class="bg-red-500 flex-1 py-2 rounded-xl text-white">Delete</button>
-            <button onclick="closeDeleteModal()" class="bg-gray-500 flex-1 py-2 rounded-xl text-white">Cancel</button>
-        </div>
-    </div>
-</div>
-
+<!-- Dashboard -->
 <div id="dashboard" style="display:none;">
     <div class="container mx-auto p-4">
         <div class="flex justify-between items-center bg-white p-4 rounded-xl mb-4">
+            <div><h1 class="font-bold">RAWABI Specialized Contracting</h1><p class="text-xs text-gray-500">Material Portal</p></div>
             <div class="flex items-center gap-3">
-                <img id="headerLogo" src="https://placehold.co/50x50/f59e0b/ffffff?text=RSC" class="logo" onclick="uploadLogo()">
-                <div><h1 class="font-bold">RAWABI Specialized Contracting</h1><p class="text-xs text-gray-500">Complete Material Portal</p></div>
-            </div>
-            <div class="flex items-center gap-3">
-                <span id="syncStatus" class="online-badge">? Live</span>
                 <span id="userName"></span>
-                <div class="relative">
-                    <button onclick="toggleMenu()" class="bg-gray-200 px-3 py-2 rounded-full"><i class="fas fa-user"></i></button>
-                    <div id="userMenu" class="hidden absolute right-0 mt-2 bg-white shadow-lg rounded-lg w-40">
-                        <a onclick="showEditProfile()" class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Edit Profile</a>
-                        <a onclick="showChangePassword()" class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Change Password</a>
-                        <a onclick="logout()" class="block px-4 py-2 hover:bg-gray-100 cursor-pointer">Logout</a>
-                    </div>
-                </div>
+                <button onclick="logout()" class="bg-red-500 text-white px-3 py-1 rounded text-sm">Logout</button>
             </div>
-        </div>
-
-        <div class="grid grid-cols-4 gap-4 mb-6">
-            <div class="bg-white p-4 rounded-xl text-center"><i class="fas fa-truck text-orange-500 text-2xl"></i><h3 id="statGate" class="text-2xl font-bold">0</h3><p>Gate Passes</p></div>
-            <div class="bg-white p-4 rounded-xl text-center"><i class="fas fa-clipboard-list text-blue-500 text-2xl"></i><h3 id="statReq" class="text-2xl font-bold">0</h3><p>Requests</p></div>
-            <div class="bg-white p-4 rounded-xl text-center"><i class="fas fa-users text-green-500 text-2xl"></i><h3 id="statUser" class="text-2xl font-bold">0</h3><p>Users</p></div>
-            <div class="bg-white p-4 rounded-xl text-center"><i class="fas fa-check-circle text-purple-500 text-2xl"></i><h3 id="statApp" class="text-2xl font-bold">0</h3><p>Approved</p></div>
         </div>
 
         <div class="grid grid-cols-3 gap-4 mb-6">
@@ -137,14 +83,11 @@
 
         <div id="adminPanel" class="bg-white p-4 rounded-xl mb-6" style="display:none;">
             <h3 class="font-bold mb-2">Admin Controls</h3>
-            <div class="flex gap-2 flex-wrap">
-                <button onclick="showUsers()" class="bg-gray-800 text-white px-3 py-1 rounded text-sm">?? Users</button>
-                <button onclick="uploadLogo()" class="bg-orange-600 text-white px-3 py-1 rounded text-sm">Change Logo</button>
-            </div>
+            <button onclick="showUsers()" class="bg-gray-800 text-white px-3 py-1 rounded text-sm">Manage Users</button>
         </div>
 
         <div id="contentArea" class="bg-white rounded-xl p-6 min-h-[300px]">
-            <p class="text-center text-gray-500">Select an option</p>
+            <p class="text-center text-gray-500">Select an option above</p>
         </div>
     </div>
 </div>
@@ -163,14 +106,14 @@
     const DEPARTMENTS = ['Civil', 'Electrical', 'Mechanical', 'Mechanic', 'HSE', 'Administrator', 'HR'];
     const LOCATIONS = ['SAMREF', 'Samref Oil Port', 'King Fahd Industrial Port', 'Camp'];
     const VEHICLE_TYPES = ['Pick-up', 'Boom truck', 'Truck', 'Flatbed', 'JCB', 'Crane', 'Diesel tanker'];
-    const UNITS = ['Each', 'Piece', 'Set', 'Packet', 'Load', 'Lot', 'Box', 'Bundle', 'Bottle', 'KG', 'Bag', 'Barrel', 'Carton', 'Cubic Meter', 'Cylinder', 'Feet', 'Gallon', 'Meter', 'Pair', 'Ton'];
+    const UNITS = ['Each', 'Piece', 'Set', 'Box', 'KG', 'Meter', 'Ton'];
 
     function initData() {
         if(Object.keys(allUsers).length === 0) {
             allUsers = {
-                'admin': { password: 'admin123', role: 'admin', name: 'Administrator', email: 'admin@rawabi.com', phone: '+966500000000', position: 'System Admin', approved: true, blocked: false, securityAnswer: 'blue', createdDate: new Date().toLocaleDateString() },
-                'gate.approver': { password: 'approve123', role: 'gate_approver', name: 'Gate Approver', email: 'gate@rawabi.com', phone: '+966500000001', position: 'Gate Approver', approved: true, blocked: false, securityAnswer: 'red', createdDate: new Date().toLocaleDateString() },
-                'ahmed': { password: 'civil123', role: 'staff', name: 'Ahmed Civil', email: 'ahmed@rawabi.com', phone: '+966500000002', position: 'Civil Engineer', approved: true, blocked: false, securityAnswer: 'green', createdDate: new Date().toLocaleDateString() }
+                'admin': { password: 'admin123', role: 'admin', name: 'Administrator', email: 'admin@rawabi.com', approved: true, blocked: false, securityAnswer: 'blue' },
+                'gate.approver': { password: 'approve123', role: 'gate_approver', name: 'Gate Approver', email: 'gate@rawabi.com', approved: true, blocked: false, securityAnswer: 'red' },
+                'ahmed': { password: 'civil123', role: 'staff', name: 'Ahmed Civil', email: 'ahmed@rawabi.com', approved: true, blocked: false, securityAnswer: 'green' }
             };
             localStorage.setItem('portal_users', JSON.stringify(allUsers));
         }
@@ -180,37 +123,19 @@
     function showModal(title, msg) { document.getElementById('modalTitle').innerText = title; document.getElementById('modalMsg').innerHTML = msg; document.getElementById('modal').style.display = 'flex'; }
     function closeModal() { document.getElementById('modal').style.display = 'none'; }
 
-    function uploadLogo() {
-        const input = document.createElement('input'); input.type = 'file'; input.accept = 'image/*';
-        input.onchange = e => { const file = e.target.files[0]; if(file) { const reader = new FileReader(); reader.onload = ev => { const imgData = ev.target.result; document.getElementById('loginLogo').src = imgData; document.getElementById('headerLogo').src = imgData; localStorage.setItem('company_logo', imgData); showModal('Success', 'Logo updated'); }; reader.readAsDataURL(file); } };
-        input.click();
-    }
-    const savedLogo = localStorage.getItem('company_logo'); if(savedLogo) { document.getElementById('loginLogo').src = savedLogo; document.getElementById('headerLogo').src = savedLogo; }
-
-    function toggleMenu() { document.getElementById('userMenu').classList.toggle('hidden'); }
     function showRegister() { document.getElementById('loginScreen').style.display = 'none'; document.getElementById('registerScreen').style.display = 'flex'; }
-    function showLogin() { document.getElementById('registerScreen').style.display = 'none'; document.getElementById('forgotScreen').style.display = 'none'; document.getElementById('changeScreen').style.display = 'none'; document.getElementById('editProfileScreen').style.display = 'none'; document.getElementById('loginScreen').style.display = 'flex'; }
+    function showLogin() { document.getElementById('registerScreen').style.display = 'none'; document.getElementById('forgotScreen').style.display = 'none'; document.getElementById('loginScreen').style.display = 'flex'; }
     function showForgot() { document.getElementById('loginScreen').style.display = 'none'; document.getElementById('forgotScreen').style.display = 'flex'; }
-    function showChangePassword() { document.getElementById('changeScreen').style.display = 'flex'; document.getElementById('dashboard').style.display = 'none'; }
-    function hideChange() { document.getElementById('changeScreen').style.display = 'none'; document.getElementById('dashboard').style.display = 'block'; updateStats(); }
-    function showEditProfile() { document.getElementById('editFullname').value = currentUser.name; document.getElementById('editPhone').value = currentUser.phone || ''; document.getElementById('editPosition').value = currentUser.position || ''; document.getElementById('dashboard').style.display = 'none'; document.getElementById('editProfileScreen').style.display = 'flex'; }
-    function hideEditProfile() { document.getElementById('editProfileScreen').style.display = 'none'; document.getElementById('dashboard').style.display = 'block'; updateStats(); }
-    function saveProfile() { currentUser.name = document.getElementById('editFullname').value; currentUser.phone = document.getElementById('editPhone').value; currentUser.position = document.getElementById('editPosition').value; allUsers[currentUser.username].name = currentUser.name; allUsers[currentUser.username].phone = currentUser.phone; allUsers[currentUser.username].position = currentUser.position; localStorage.setItem('portal_users', JSON.stringify(allUsers)); document.getElementById('userName').innerHTML = currentUser.name; showModal('Success', 'Profile updated'); hideEditProfile(); }
-    function showDeleteAccountConfirm() { document.getElementById('deleteAccountModal').style.display = 'flex'; }
-    function closeDeleteModal() { document.getElementById('deleteAccountModal').style.display = 'none'; }
-    function confirmDeleteAccount() { closeDeleteModal(); delete allUsers[currentUser.username]; localStorage.setItem('portal_users', JSON.stringify(allUsers)); logout(); showModal('Account Deleted', 'Your account has been deleted.'); }
 
     function doRegister() {
         const fullname = document.getElementById('regFullname').value;
         const username = document.getElementById('regUsername').value;
         const email = document.getElementById('regEmail').value;
         const password = document.getElementById('regPassword').value;
-        const phone = document.getElementById('regPhone').value;
-        const position = document.getElementById('regPosition').value;
         const security = document.getElementById('regSecurity').value;
         if(!fullname || !username || !email || !password) { showModal('Error', 'Fill all fields'); return; }
         if(allUsers[username]) { showModal('Error', 'Username exists'); return; }
-        allUsers[username] = { password, role: 'staff', name: fullname, email, phone, position, approved: false, blocked: false, securityAnswer: security, createdDate: new Date().toLocaleDateString() };
+        allUsers[username] = { password, role: 'staff', name: fullname, email, approved: false, blocked: false, securityAnswer: security };
         localStorage.setItem('portal_users', JSON.stringify(allUsers));
         showModal('Success', 'Registration submitted. Admin will approve.');
         showLogin();
@@ -225,19 +150,6 @@
         user.password = newPass;
         localStorage.setItem('portal_users', JSON.stringify(allUsers));
         showModal('Success', 'Password reset'); showLogin();
-    }
-
-    function changePassword() {
-        const current = document.getElementById('currentPwd').value;
-        const newP = document.getElementById('newPwd').value;
-        const confirm = document.getElementById('confirmPwd').value;
-        if(!current || !newP || !confirm) { showModal('Error', 'Fill fields'); return; }
-        if(newP !== confirm) { showModal('Error', 'Passwords do not match'); return; }
-        if(current !== currentUser.password) { showModal('Error', 'Current password incorrect'); return; }
-        allUsers[currentUser.username].password = newP;
-        currentUser.password = newP;
-        localStorage.setItem('portal_users', JSON.stringify(allUsers));
-        showModal('Success', 'Password changed'); hideChange();
     }
 
     function doLogin() {
@@ -333,9 +245,6 @@
         allGatePasses.forEach(g => all.push({ id: g.id, type: 'gate', title: `Gate Pass ${g.id}`, status: g.approved ? 'approved' : 'pending', createdBy: g.created_by, createdAt: g.created_at, details: g }));
         allMaterialRequests.forEach(r => { const allApp = r.storekeeper_approved && r.pm_approved && r.purchaser_approved && r.admin_approved; all.push({ id: r.id, type: 'material', title: `Request ${r.id}`, status: allApp ? 'approved' : 'pending', createdBy: r.created_by, createdAt: r.created_at, details: r }); });
         all.sort((a,b)=>new Date(b.createdAt)-new Date(a.createdAt));
-        let filtered = all;
-        if(currentFilter === 'pending') filtered = all.filter(r => r.status === 'pending');
-        else if(currentFilter === 'approved') filtered = all.filter(r => r.status === 'approved');
         let html = `<div class="mb-4"><div class="flex gap-2"><div class="filter-btn ${currentFilter==='all'?'active':''}" onclick="setFilter('all')">All (${all.length})</div><div class="filter-btn ${currentFilter==='pending'?'active':''}" onclick="setFilter('pending')">Pending (${all.filter(r=>r.status==='pending').length})</div><div class="filter-btn ${currentFilter==='approved'?'active':''}" onclick="setFilter('approved')">Approved (${all.filter(r=>r.status==='approved').length})</div></div></div><div class="space-y-3">`;
         for(const r of filtered) {
             html += `<div class="border p-3 rounded cursor-pointer hover:shadow" onclick="showDetail('${r.id}','${r.type}')"><div class="flex justify-between"><b>${r.title}</b><span class="status-badge ${r.status==='approved'?'status-approved':'status-pending'}">${r.status==='approved'?'Approved':'Pending'}</span></div><div class="text-sm">${r.createdBy} | ${r.createdAt}</div></div>`;
@@ -348,10 +257,45 @@
     function showDetail(id, type) {
         if(type === 'gate') {
             const g = allGatePasses.find(p => p.id === id);
-            let itemsHtml = '<table class="w-full border"><tr><th>Item</th><th>Qty</th><th>Unit</th></tr>';
+            let itemsHtml = '<table class="w-full border"><tr><th>Item</th><th>Qty</th><th>Unit</th></td>';
             g.items.forEach(i => itemsHtml += `<tr><td class="p-2">${i.name}</td><td class="text-center">${i.qty}</td><td class="text-center">${i.unit}</td></tr>`);
-            itemsHtml += '</table>';
+            itemsHtml += '</tr>';
             let approveBtn = (!g.approved && (currentUser.role === 'admin' || currentUser.role === 'gate_approver')) ? `<button onclick="approveGate('${g.id}')" class="bg-green-500 text-white px-3 py-1 rounded mt-2">Approve</button>` : '';
-            showModal('Gate Pass Details', `<div><b>${g.id}</b><div class="grid grid-cols-2 gap-2 mt-2"><div><b>Dept:</b> ${g.department}</div><div><b>Driver:</b> ${g.driver_name}</div><div><b>Vehicle:</b> ${g.vehicle_no}</div><div><b>Type:</b> ${g.vehicle_type}</div><div><b>Date:</b> ${g.gate_date}</div><div><b>Location:</b> ${g.location}</div></div>${itemsHtml}${approveBtn}</div>`);
+            showModal('Gate Pass Details', `<div><b>${g.id}</b><br>Dept: ${g.department}<br>Driver: ${g.driver_name}<br>Vehicle: ${g.vehicle_no}<br>Type: ${g.vehicle_type}<br>Location: ${g.location}<br>Created by: ${g.created_by}<br><br>${itemsHtml}${approveBtn}</div>`);
         } else {
-            const r = allMaterialRequests.find(p
+            const r = allMaterialRequests.find(p => p.id === id);
+            let itemsHtml = '<table class="w-full border"><tr><th>Item</th><th>Qty</th><th>Unit</th></tr>';
+            r.items.forEach(i => itemsHtml += `<td><td class="p-2">${i.name}</td><td class="text-center">${i.qty}</td><td class="text-center">${i.unit}</td></tr>`);
+            itemsHtml += '</table>';
+            let approveBtns = '';
+            if(currentUser.role === 'admin') {
+                if(!r.storekeeper_approved) approveBtns += `<button onclick="approveStage('${r.id}','storekeeper_approved')" class="bg-gray-600 text-white px-2 py-1 rounded text-sm m-1">Storekeeper</button>`;
+                if(!r.pm_approved) approveBtns += `<button onclick="approveStage('${r.id}','pm_approved')" class="bg-gray-600 text-white px-2 py-1 rounded text-sm m-1">PM</button>`;
+                if(!r.purchaser_approved) approveBtns += `<button onclick="approveStage('${r.id}','purchaser_approved')" class="bg-gray-600 text-white px-2 py-1 rounded text-sm m-1">Purchaser</button>`;
+                if(!r.admin_approved) approveBtns += `<button onclick="approveStage('${r.id}','admin_approved')" class="bg-gray-600 text-white px-2 py-1 rounded text-sm m-1">Admin</button>`;
+            }
+            showModal('Request Details', `<div><b>${r.id}</b><br>Dept: ${r.department}<br>Project: ${r.project_name}<br>Date: ${r.request_date}<br><br><b>Approvals:</b> Store:${r.storekeeper_approved?'?':'?'} PM:${r.pm_approved?'?':'?'} Purch:${r.purchaser_approved?'?':'?'} Admin:${r.admin_approved?'?':'?'}<br><br>${itemsHtml}<div class="mt-2">${approveBtns}</div></div>`);
+        }
+    }
+    function approveGate(id) { const idx = allGatePasses.findIndex(p => p.id === id); if(idx !== -1) { allGatePasses[idx].approved = true; localStorage.setItem('gate_passes', JSON.stringify(allGatePasses)); updateStats(); showModal('Success', 'Gate approved'); showAllRequests(); closeModal(); } }
+    function approveStage(id, field) { const idx = allMaterialRequests.findIndex(r => r.id === id); if(idx !== -1) { allMaterialRequests[idx][field] = true; localStorage.setItem('material_requests', JSON.stringify(allMaterialRequests)); updateStats(); showModal('Success', 'Stage approved'); showAllRequests(); closeModal(); } }
+
+    function showUsers() {
+        let html = '<h2 class="text-xl font-bold mb-3">User Management</h2><table class="w-full border"><tr class="bg-gray-100"><th>Username</th><th>Name</th><th>Role</th><th>Status</th><th>Actions</th></tr>';
+        for(const [username, user] of Object.entries(allUsers)) {
+            const status = user.blocked ? 'Blocked' : (user.approved ? 'Active' : 'Pending');
+            html += `<tr><td class="p-2">${username}</td><td class="p-2">${user.name}</td><td class="p-2">${user.role}</td><td class="p-2">${status}</td><td class="p-2">`;
+            if(!user.approved) html += `<button onclick="approveUser('${username}')" class="bg-green-500 text-white px-2 py-1 rounded text-xs mr-1">Approve</button>`;
+            if(user.approved && !user.blocked && username !== 'admin') html += `<button onclick="blockUser('${username}')" class="bg-red-500 text-white px-2 py-1 rounded text-xs">Block</button>`;
+            if(user.blocked) html += `<button onclick="unblockUser('${username}')" class="bg-green-500 text-white px-2 py-1 rounded text-xs">Unblock</button>`;
+            html += `</td></tr>`;
+        }
+        html += `</table><button onclick="showGateForm()" class="mt-4 bg-gray-500 text-white px-4 py-2 rounded">Back</button>`;
+        document.getElementById('contentArea').innerHTML = html;
+    }
+    function approveUser(username) { allUsers[username].approved = true; allUsers[username].blocked = false; localStorage.setItem('portal_users', JSON.stringify(allUsers)); updateStats(); showModal('Success', `User ${username} approved`); showUsers(); }
+    function blockUser(username) { allUsers[username].blocked = true; localStorage.setItem('portal_users', JSON.stringify(allUsers)); updateStats(); showModal('Success', `User ${username} blocked`); showUsers(); }
+    function unblockUser(username) { allUsers[username].blocked = false; localStorage.setItem('portal_users', JSON.stringify(allUsers)); updateStats(); showModal('Success', `User ${username} unblocked`); showUsers(); }
+</script>
+</body>
+</html>
