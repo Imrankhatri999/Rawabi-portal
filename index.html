@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Rawabi Specialized Contracting | Complete Portal</title>
+    <title>????? ????????? ???????? | RAWABI SPECIALIZED CONTRACTING</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.31/jspdf.plugin.autotable.min.js"></script>
@@ -11,17 +11,17 @@
     <style>
         * { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; }
         
-        /* Purple & White Professional Theme */
-        body { background: linear-gradient(135deg, #f3e8ff 0%, #e9d5ff 100%); min-height: 100vh; }
+        /* Navy Blue & White Professional Theme */
+        body { background: linear-gradient(135deg, #f0f4f8 0%, #e2e8f0 100%); min-height: 100vh; }
         
-        .glass-card { background: white; border-radius: 20px; padding: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.2s; border: 1px solid #f3e8ff; }
+        .glass-card { background: white; border-radius: 20px; padding: 24px; box-shadow: 0 4px 15px rgba(0,0,0,0.05); transition: 0.2s; border: 1px solid #e2e8f0; }
         .glass-card:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
         
-        .btn-primary { background: linear-gradient(135deg, #7c3aed 0%, #6d28d9 100%); transition: 0.2s; cursor: pointer; }
-        .btn-primary:hover { background: linear-gradient(135deg, #6d28d9 0%, #5b21b6 100%); transform: scale(1.02); }
+        .btn-primary { background: linear-gradient(135deg, #1e3a5f 0%, #0f2b48 100%); transition: 0.2s; cursor: pointer; }
+        .btn-primary:hover { background: linear-gradient(135deg, #163250 0%, #0a1f35 100%); transform: scale(1.02); }
         
-        .btn-secondary { background: #9ca3af; transition: 0.2s; cursor: pointer; }
-        .btn-secondary:hover { background: #6b7280; transform: scale(1.02); }
+        .btn-secondary { background: #64748b; transition: 0.2s; cursor: pointer; }
+        .btn-secondary:hover { background: #475569; transform: scale(1.02); }
         
         .btn-danger { background: #ef4444; transition: 0.2s; cursor: pointer; }
         .btn-danger:hover { background: #dc2626; transform: scale(1.02); }
@@ -29,11 +29,8 @@
         .btn-success { background: #10b981; transition: 0.2s; cursor: pointer; }
         .btn-success:hover { background: #059669; transform: scale(1.02); }
         
-        .btn-outline { background: transparent; border: 2px solid #7c3aed; color: #7c3aed; transition: 0.2s; cursor: pointer; }
-        .btn-outline:hover { background: #7c3aed; color: white; transform: scale(1.02); }
-        
-        input, select { width: 100%; padding: 10px 12px; margin: 8px 0; border: 1px solid #e5e7eb; border-radius: 12px; transition: 0.2s; font-size: 14px; background: white; }
-        input:focus, select:focus { outline: none; border-color: #7c3aed; box-shadow: 0 0 0 3px rgba(124,58,237,0.1); }
+        input, select { width: 100%; padding: 10px 12px; margin: 8px 0; border: 1px solid #e2e8f0; border-radius: 12px; transition: 0.2s; font-size: 14px; background: white; }
+        input:focus, select:focus { outline: none; border-color: #1e3a5f; box-shadow: 0 0 0 3px rgba(30,58,95,0.1); }
         
         .item-row { display: flex; gap: 12px; margin-bottom: 12px; align-items: center; }
         .item-row input, .item-row select { margin: 0; }
@@ -43,44 +40,53 @@
         .status-pending { background: #fef3c7; color: #92400e; }
         .status-blocked { background: #fee2e2; color: #991b1b; }
         
-        .filter-btn { padding: 6px 16px; border-radius: 20px; cursor: pointer; background: white; border: 1px solid #e5e7eb; transition: 0.2s; font-size: 13px; }
-        .filter-btn.active { background: #7c3aed; color: white; border-color: #7c3aed; }
+        .filter-btn { padding: 6px 16px; border-radius: 20px; cursor: pointer; background: white; border: 1px solid #e2e8f0; transition: 0.2s; font-size: 13px; }
+        .filter-btn.active { background: #1e3a5f; color: white; border-color: #1e3a5f; }
         
-        .header { background: white; padding: 16px 24px; border-radius: 16px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 1px solid #f3e8ff; }
+        .header { background: white; padding: 16px 24px; border-radius: 16px; margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 15px; box-shadow: 0 2px 10px rgba(0,0,0,0.05); border: 1px solid #e2e8f0; }
         
-        .stat-card { background: white; border-radius: 16px; padding: 20px; text-align: center; transition: 0.2s; border-left: 4px solid #7c3aed; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
+        .stat-card { background: white; border-radius: 16px; padding: 20px; text-align: center; transition: 0.2s; border-left: 4px solid #1e3a5f; box-shadow: 0 2px 5px rgba(0,0,0,0.05); }
         .stat-card:hover { transform: translateY(-3px); box-shadow: 0 10px 25px rgba(0,0,0,0.1); }
         
-        .logo { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; cursor: pointer; border: 2px solid #7c3aed; transition: 0.2s; }
-        .logo:hover { transform: scale(1.05); border-color: #6d28d9; }
+        .logo { width: 50px; height: 50px; border-radius: 50%; object-fit: cover; cursor: pointer; border: 2px solid #1e3a5f; transition: 0.2s; }
+        .logo:hover { transform: scale(1.05); border-color: #0f2b48; }
         
-        .company-name-ar { font-size: 12px; color: #6b7280; }
+        .company-name-ar { font-size: 14px; color: #64748b; font-weight: 500; letter-spacing: 0.5px; }
+        .company-name-en { font-size: 18px; font-weight: bold; color: #1e3a5f; }
         
         .dropdown { position: relative; display: inline-block; }
-        .dropdown-content { display: none; position: absolute; right: 0; top: 100%; background-color: white; min-width: 200px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); border-radius: 12px; z-index: 50; margin-top: 8px; overflow: hidden; border: 1px solid #f3e8ff; }
-        .dropdown-content a { color: #4b5563; padding: 12px 16px; text-decoration: none; display: block; cursor: pointer; transition: 0.2s; }
-        .dropdown-content a:hover { background-color: #f3e8ff; color: #7c3aed; }
+        .dropdown-content { display: none; position: absolute; right: 0; top: 100%; background-color: white; min-width: 200px; box-shadow: 0 8px 16px rgba(0,0,0,0.1); border-radius: 12px; z-index: 50; margin-top: 8px; overflow: hidden; border: 1px solid #e2e8f0; }
+        .dropdown-content a { color: #334155; padding: 12px 16px; text-decoration: none; display: block; cursor: pointer; transition: 0.2s; }
+        .dropdown-content a:hover { background-color: #eff6ff; color: #1e3a5f; }
         .dropdown:hover .dropdown-content { display: block; }
         
         .user-table { width: 100%; border-collapse: collapse; }
-        .user-table th, .user-table td { padding: 14px 12px; border-bottom: 1px solid #e5e7eb; text-align: left; }
-        .user-table th { background: #faf5ff; color: #6d28d9; font-weight: 600; }
-        .user-table tr:hover { background: #faf5ff; }
+        .user-table th, .user-table td { padding: 14px 12px; border-bottom: 1px solid #e2e8f0; text-align: left; }
+        .user-table th { background: #f8fafc; color: #1e3a5f; font-weight: 600; }
+        .user-table tr:hover { background: #f8fafc; }
         
         .search-box { position: relative; margin-bottom: 20px; }
-        .search-box i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #9ca3af; }
+        .search-box i { position: absolute; left: 12px; top: 50%; transform: translateY(-50%); color: #94a3b8; }
         .search-box input { padding-left: 35px; }
         
-        .request-card { transition: 0.2s; cursor: pointer; border: 1px solid #e5e7eb; border-radius: 12px; margin-bottom: 12px; padding: 16px; background: white; }
-        .request-card:hover { transform: translateX(5px); box-shadow: 0 5px 15px rgba(0,0,0,0.08); border-color: #7c3aed; background: #faf5ff; }
+        .request-card { transition: 0.2s; cursor: pointer; border: 1px solid #e2e8f0; border-radius: 12px; margin-bottom: 12px; padding: 16px; background: white; }
+        .request-card:hover { transform: translateX(5px); box-shadow: 0 5px 15px rgba(0,0,0,0.08); border-color: #1e3a5f; background: #f8fafc; }
         
         .modal { display: none; position: fixed; top:0; left:0; width:100%; height:100%; background: rgba(0,0,0,0.5); backdrop-filter: blur(4px); justify-content: center; align-items: center; z-index: 1000; }
         .modal-content { background: white; max-width: 550px; width: 90%; padding: 28px; border-radius: 24px; max-height: 85vh; overflow-y: auto; }
         
-        .role-badge { padding: 5px 12px; border-radius: 20px; cursor: pointer; background: white; border: 1px solid #e5e7eb; font-size: 12px; transition: 0.2s; }
-        .role-badge.active { background: #7c3aed; color: white; border-color: #7c3aed; }
+        .role-badge { padding: 5px 12px; border-radius: 20px; cursor: pointer; background: white; border: 1px solid #e2e8f0; font-size: 12px; transition: 0.2s; }
+        .role-badge.active { background: #1e3a5f; color: white; border-color: #1e3a5f; }
         
         .login-container { background: white; border-radius: 24px; padding: 32px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); }
+        
+        .welcome-text { font-size: 14px; color: #64748b; margin-top: 8px; }
+        
+        /* Navy Blue Highlights */
+        .text-navy { color: #1e3a5f; }
+        .bg-navy { background: #1e3a5f; }
+        .border-navy { border-color: #1e3a5f; }
+        .hover\:bg-navy:hover { background: #0f2b48; }
     </style>
 </head>
 <body>
@@ -89,17 +95,17 @@
 <div id="loginScreen" class="min-h-screen flex items-center justify-center p-4">
     <div class="login-container max-w-md w-full text-center">
         <div class="flex justify-center mb-4">
-            <img id="loginLogo" src="https://placehold.co/80x80/7c3aed/ffffff?text=RSC" class="w-20 h-20 rounded-full cursor-pointer border-2 border-purple-500" onclick="uploadLogo()">
+            <img id="loginLogo" src="https://placehold.co/80x80/1e3a5f/ffffff?text=RSC" class="w-20 h-20 rounded-full cursor-pointer border-2 border-navy" onclick="uploadLogo()">
         </div>
-        <h2 class="text-2xl font-bold" style="color:#6d28d9;">RAWABI <span style="color:#7c3aed;">Specialized Contracting</span></h2>
-        <p class="company-name-ar text-gray-500 mb-2">????? ????????? ????????</p>
-        <p class="text-gray-500 mb-6">Complete Material Management Portal</p>
+        <h2 class="text-2xl font-bold" style="color:#1e3a5f;">RAWABI <span style="color:#0f2b48;">SPECIALIZED CONTRACTING</span></h2>
+        <p class="company-name-ar mt-1">????? ????????? ????????</p>
+        <p class="text-gray-500 mb-6 welcome-text">Material Management Portal</p>
         <input type="text" id="loginUsername" placeholder="Username" class="w-full">
         <input type="password" id="loginPassword" placeholder="Password" class="w-full mt-3">
         <button onclick="doLogin()" class="btn-primary w-full py-3 rounded-xl text-white font-semibold mt-4">Login</button>
         <div class="flex justify-between mt-4 text-sm">
-            <a href="#" onclick="showRegister()" class="text-purple-600 hover:underline">Create Account</a>
-            <a href="#" onclick="showForgot()" class="text-purple-600 hover:underline">Forgot Password?</a>
+            <a href="#" onclick="showRegister()" class="text-navy hover:underline">Create Account</a>
+            <a href="#" onclick="showForgot()" class="text-navy hover:underline">Forgot Password?</a>
         </div>
     </div>
 </div>
@@ -107,7 +113,8 @@
 <!-- Register Screen -->
 <div id="registerScreen" class="min-h-screen flex items-center justify-center p-4" style="display:none;">
     <div class="login-container max-w-md w-full">
-        <h2 class="text-2xl font-bold text-center" style="color:#6d28d9;">Create Account</h2>
+        <h2 class="text-2xl font-bold text-center" style="color:#1e3a5f;">CREATE ACCOUNT</h2>
+        <p class="company-name-ar text-center mb-4">????? ????????? ????????</p>
         <input type="text" id="regFullname" placeholder="Full Name">
         <input type="text" id="regUsername" placeholder="Username">
         <input type="email" id="regEmail" placeholder="Email">
@@ -123,7 +130,8 @@
 <!-- Forgot Password Screen -->
 <div id="forgotScreen" class="min-h-screen flex items-center justify-center p-4" style="display:none;">
     <div class="login-container max-w-md w-full">
-        <h2 class="text-2xl font-bold text-center" style="color:#6d28d9;">Reset Password</h2>
+        <h2 class="text-2xl font-bold text-center" style="color:#1e3a5f;">RESET PASSWORD</h2>
+        <p class="company-name-ar text-center mb-4">????? ????????? ????????</p>
         <input type="text" id="forgotUsername" placeholder="Username">
         <input type="text" id="forgotAnswer" placeholder="Security Answer">
         <input type="password" id="forgotNewPass" placeholder="New Password">
@@ -135,7 +143,8 @@
 <!-- Change Password Screen -->
 <div id="changeScreen" class="min-h-screen flex items-center justify-center p-4" style="display:none;">
     <div class="login-container max-w-md w-full">
-        <h2 class="text-2xl font-bold text-center" style="color:#6d28d9;">Change Password</h2>
+        <h2 class="text-2xl font-bold text-center" style="color:#1e3a5f;">CHANGE PASSWORD</h2>
+        <p class="company-name-ar text-center mb-4">????? ????????? ????????</p>
         <input type="password" id="currentPwd" placeholder="Current Password">
         <input type="password" id="newPwd" placeholder="New Password">
         <input type="password" id="confirmPwd" placeholder="Confirm Password">
@@ -147,7 +156,8 @@
 <!-- Edit Profile Screen -->
 <div id="editProfileScreen" class="min-h-screen flex items-center justify-center p-4" style="display:none;">
     <div class="login-container max-w-md w-full">
-        <h2 class="text-2xl font-bold text-center" style="color:#6d28d9;">Edit Profile</h2>
+        <h2 class="text-2xl font-bold text-center" style="color:#1e3a5f;">EDIT PROFILE</h2>
+        <p class="company-name-ar text-center mb-4">????? ????????? ????????</p>
         <input type="text" id="editFullname" placeholder="Full Name">
         <input type="text" id="editPhone" placeholder="Phone Number">
         <input type="text" id="editPosition" placeholder="Position / Job Title">
@@ -179,18 +189,18 @@
     <div class="container mx-auto p-4">
         <div class="header">
             <div class="flex items-center gap-3">
-                <img id="headerLogo" src="https://placehold.co/50x50/7c3aed/ffffff?text=RSC" class="logo" onclick="uploadLogo()">
+                <img id="headerLogo" src="https://placehold.co/50x50/1e3a5f/ffffff?text=RSC" class="logo" onclick="uploadLogo()">
                 <div>
-                    <h1 class="text-xl font-bold" style="color:#6d28d9;">RAWABI <span style="color:#7c3aed;">Specialized Contracting</span></h1>
-                    <p class="company-name-ar text-gray-500">????? ????????? ????????</p>
-                    <p class="text-xs text-gray-500">Complete Material Management Portal</p>
+                    <h1 class="text-xl font-bold" style="color:#1e3a5f;">RAWABI <span style="color:#0f2b48;">SPECIALIZED CONTRACTING</span></h1>
+                    <p class="company-name-ar">????? ????????? ????????</p>
+                    <p class="text-xs text-gray-500 mt-1">Complete Material Management Portal</p>
                 </div>
             </div>
             <div class="flex items-center gap-3">
                 <span id="syncStatus" class="bg-green-500 text-white px-3 py-1 rounded-full text-xs">? Live</span>
                 <span id="userNameDisplay" class="font-medium"></span>
                 <div class="dropdown">
-                    <button class="bg-gray-100 px-3 py-2 rounded-full hover:bg-gray-200"><i class="fas fa-user-circle text-xl text-purple-600"></i></button>
+                    <button class="bg-gray-100 px-3 py-2 rounded-full hover:bg-gray-200"><i class="fas fa-user-circle text-xl" style="color:#1e3a5f;"></i></button>
                     <div class="dropdown-content">
                         <a onclick="showEditProfile()"><i class="fas fa-user-edit mr-2"></i> Edit Profile</a>
                         <a onclick="showChangePassword()"><i class="fas fa-key mr-2"></i> Change Password</a>
@@ -202,27 +212,27 @@
 
         <!-- Stats Cards -->
         <div class="grid grid-cols-1 md:grid-cols-4 gap-5 mb-6">
-            <div class="stat-card"><i class="fas fa-truck text-3xl text-purple-500"></i><h3 id="statGate" class="text-2xl font-bold mt-2">0</h3><p class="text-gray-500">Gate Passes</p></div>
-            <div class="stat-card"><i class="fas fa-clipboard-list text-3xl text-purple-500"></i><h3 id="statReq" class="text-2xl font-bold mt-2">0</h3><p class="text-gray-500">Material Requests</p></div>
-            <div class="stat-card"><i class="fas fa-users text-3xl text-purple-500"></i><h3 id="statUser" class="text-2xl font-bold mt-2">0</h3><p class="text-gray-500">Active Users</p></div>
-            <div class="stat-card"><i class="fas fa-check-circle text-3xl text-purple-500"></i><h3 id="statApp" class="text-2xl font-bold mt-2">0</h3><p class="text-gray-500">Approved</p></div>
+            <div class="stat-card"><i class="fas fa-truck text-3xl" style="color:#1e3a5f;"></i><h3 id="statGate" class="text-2xl font-bold mt-2">0</h3><p class="text-gray-500">Gate Passes</p></div>
+            <div class="stat-card"><i class="fas fa-clipboard-list text-3xl" style="color:#1e3a5f;"></i><h3 id="statReq" class="text-2xl font-bold mt-2">0</h3><p class="text-gray-500">Material Requests</p></div>
+            <div class="stat-card"><i class="fas fa-users text-3xl" style="color:#1e3a5f;"></i><h3 id="statUser" class="text-2xl font-bold mt-2">0</h3><p class="text-gray-500">Active Users</p></div>
+            <div class="stat-card"><i class="fas fa-check-circle text-3xl" style="color:#1e3a5f;"></i><h3 id="statApp" class="text-2xl font-bold mt-2">0</h3><p class="text-gray-500">Approved</p></div>
         </div>
 
         <!-- Action Cards -->
         <div class="grid grid-cols-1 md:grid-cols-3 gap-5 mb-6">
-            <div class="glass-card text-center cursor-pointer hover:border-purple-300" onclick="showGateForm()"><i class="fas fa-truck text-5xl text-purple-500 mb-3"></i><h3 class="font-bold">Material Gate Pass</h3><p class="text-xs text-gray-500">Create Gate Pass</p></div>
-            <div class="glass-card text-center cursor-pointer hover:border-purple-300" onclick="showRequestForm()"><i class="fas fa-clipboard-list text-5xl text-purple-500 mb-3"></i><h3 class="font-bold">Material Request</h3><p class="text-xs text-gray-500">Request Materials</p></div>
-            <div class="glass-card text-center cursor-pointer hover:border-purple-300" onclick="showAllRequests()"><i class="fas fa-chart-line text-5xl text-purple-500 mb-3"></i><h3 class="font-bold">All Requests</h3><p class="text-xs text-gray-500">Track & Approve</p></div>
+            <div class="glass-card text-center cursor-pointer hover:border-navy" onclick="showGateForm()"><i class="fas fa-truck text-5xl" style="color:#1e3a5f;"></i><h3 class="font-bold">Material Gate Pass</h3><p class="text-xs text-gray-500">Create Gate Pass</p></div>
+            <div class="glass-card text-center cursor-pointer hover:border-navy" onclick="showRequestForm()"><i class="fas fa-clipboard-list text-5xl" style="color:#1e3a5f;"></i><h3 class="font-bold">Material Request</h3><p class="text-xs text-gray-500">Request Materials</p></div>
+            <div class="glass-card text-center cursor-pointer hover:border-navy" onclick="showAllRequests()"><i class="fas fa-chart-line text-5xl" style="color:#1e3a5f;"></i><h3 class="font-bold">All Requests</h3><p class="text-xs text-gray-500">Track & Approve</p></div>
         </div>
 
         <!-- Admin Panel -->
         <div id="adminPanel" class="glass-card mb-6" style="display:none;">
-            <h3 class="font-bold mb-3" style="color:#6d28d9;"><i class="fas fa-shield-alt text-purple-500"></i> Admin Controls</h3>
+            <h3 class="font-bold mb-3" style="color:#1e3a5f;"><i class="fas fa-shield-alt" style="color:#1e3a5f;"></i> Admin Controls</h3>
             <div class="flex gap-3 flex-wrap">
                 <button onclick="showUsers()" class="bg-gray-800 text-white px-4 py-2 rounded-lg text-sm hover:bg-gray-700">?? Manage Users</button>
                 <button onclick="exportAllData()" class="bg-green-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-green-700">?? Export Data</button>
                 <button onclick="importDataPrompt()" class="bg-blue-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-blue-700">?? Import Data</button>
-                <button onclick="uploadLogo()" class="bg-purple-600 text-white px-4 py-2 rounded-lg text-sm hover:bg-purple-700">??? Change Logo</button>
+                <button onclick="uploadLogo()" class="bg-navy text-white px-4 py-2 rounded-lg text-sm hover:bg-navy/80">??? Change Logo</button>
             </div>
         </div>
 
@@ -365,12 +375,12 @@
         const { jsPDF } = window.jspdf;
         const doc = new jsPDF();
         const logo = document.getElementById('headerLogo').src;
-        if (logo && logo !== 'https://placehold.co/50x50/7c3aed/ffffff?text=RSC') {
+        if (logo && logo !== 'https://placehold.co/50x50/1e3a5f/ffffff?text=RSC') {
             try { doc.addImage(logo, 'JPEG', 15, 10, 25, 25); } catch(e) {}
         }
         doc.setFontSize(18); doc.text("RAWABI SPECIALIZED CONTRACTING", 45, 20);
-        doc.setFontSize(10); doc.text("Gate Pass - Approved", 45, 28);
-        doc.setFontSize(12); doc.text(`ID: ${gate.id}`, 20, 45);
+        doc.setFontSize(10); doc.text("????? ????????? ????????", 45, 28);
+        doc.setFontSize(12); doc.text(`Gate Pass - ${gate.id}`, 20, 45);
         doc.text(`Department: ${gate.department} | Date: ${gate.gate_date}`, 20, 55);
         doc.text(`Driver: ${gate.driver_name} | Vehicle: ${gate.vehicle_no} (${gate.vehicle_type})`, 20, 65);
         doc.text(`Type: ${gate.type} | Location: ${gate.location}`, 20, 75);
@@ -495,7 +505,7 @@
         document.getElementById('userNameDisplay').innerHTML = user.name;
         if (user.role === 'admin') document.getElementById('adminPanel').style.display = 'block';
         updateStats();
-        showModal('Welcome', `Welcome ${user.name}!`);
+        showModal('Welcome', `Welcome ${user.name} to RAWABI SPECIALIZED CONTRACTING!`);
     }
 
     function logout() { 
@@ -598,7 +608,7 @@
         let html = `<div class="mb-5"><div class="flex gap-2 flex-wrap"><div class="filter-btn ${currentFilter==='all'?'active':''}" onclick="setFilter('all')">All (${all.length})</div><div class="filter-btn ${currentFilter==='pending'?'active':''}" onclick="setFilter('pending')">Pending (${all.filter(r=>r.status==='pending').length})</div><div class="filter-btn ${currentFilter==='approved'?'active':''}" onclick="setFilter('approved')">Approved (${all.filter(r=>r.status==='approved').length})</div></div></div><div class="space-y-3">`;
         if (filtered.length===0) html += '<p class="text-center text-gray-500 py-8">No requests found</p>';
         filtered.forEach(r => {
-            html += `<div class="request-card" onclick="showDetail('${r.id}','${r.type}')"><div class="flex justify-between items-start"><div><b class="text-lg">${r.title}</b><div class="text-sm text-gray-500 mt-1">${r.createdBy} | ${r.createdAt}</div></div><span class="status-badge ${r.status==='approved'?'status-approved':'status-pending'}">${r.statusText}</span></div><div class="text-xs text-purple-500 mt-2">Click for details ?</div></div>`;
+            html += `<div class="request-card" onclick="showDetail('${r.id}','${r.type}')"><div class="flex justify-between items-start"><div><b class="text-lg">${r.title}</b><div class="text-sm text-gray-500 mt-1">${r.createdBy} | ${r.createdAt}</div></div><span class="status-badge ${r.status==='approved'?'status-approved':'status-pending'}">${r.statusText}</span></div><div class="text-xs text-navy mt-2">Click for details ?</div></div>`;
         });
         html += `</div><button onclick="showGateForm()" class="btn-secondary w-full mt-5 py-2 rounded-lg text-white">Back to Dashboard</button>`;
         document.getElementById('contentArea').innerHTML = html;
@@ -609,16 +619,16 @@
         if (type === 'gate') {
             const g = allGatePasses.find(p => p.id === id);
             let itemsHtml = '<table class="w-full border mt-3"><tr class="bg-gray-100"><th class="p-2 border">Item</th><th class="p-2 border">Qty</th><th class="p-2 border">Unit</th><th class="p-2 border">Remarks</th></tr>';
-            g.items.forEach(i => itemsHtml += `<tr><td class="p-2 border">${i.name}</td><td class="p-2 border text-center">${i.qty}</td><td class="p-2 border">${i.unit}</td><td class="p-2 border">${i.remarks || '-'}</td></tr>`);
-            itemsHtml += '</table>';
+            g.items.forEach(i => itemsHtml += `<tr><td class="p-2 border">${i.name}</td><td class="p-2 border text-center">${i.qty}</td><td class="p-2 border">${i.unit}</td><td class="p-2 border">${i.remarks || '-'}<\/td></tr>`);
+            itemsHtml += '</tbody></table>';
             let approveBtn = (!g.approved && (currentUser.role === 'admin' || currentUser.role === 'gate_approver')) ? `<button onclick="approveGate('${g.id}')" class="btn-success text-white px-4 py-2 rounded-lg mt-3">? Approve Gate Pass</button>` : '';
-            let pdfBtn = (g.approved) ? `<button onclick="generateGatePDF('${g.id}')" class="bg-purple-600 text-white px-4 py-2 rounded-lg mt-3 ml-2"><i class="fas fa-file-pdf mr-1"></i> Export PDF</button>` : '';
+            let pdfBtn = (g.approved) ? `<button onclick="generateGatePDF('${g.id}')" class="btn-primary text-white px-4 py-2 rounded-lg mt-3 ml-2"><i class="fas fa-file-pdf mr-1"></i> Export PDF</button>` : '';
             const modalContent = `<div><h3 class="font-bold text-xl">Gate Pass ${g.id}</h3><div class="grid grid-cols-2 gap-3 mt-3"><div><strong>Department:</strong> ${g.department}</div><div><strong>Date:</strong> ${g.gate_date}</div><div><strong>Driver:</strong> ${g.driver_name}</div><div><strong>Vehicle:</strong> ${g.vehicle_no}</div><div><strong>Vehicle Type:</strong> ${g.vehicle_type}</div><div><strong>Type:</strong> ${g.type}</div><div><strong>Location:</strong> ${g.location}</div><div><strong>Created By:</strong> ${g.created_by}</div><div><strong>Created At:</strong> ${g.created_at}</div><div><strong>Status:</strong> <span class="status-badge ${g.approved?'status-approved':'status-pending'}">${g.approved?'Approved':'Pending'}</span></div></div><div class="mt-3"><strong>Items:</strong></div>${itemsHtml}<div class="flex mt-3">${approveBtn}${pdfBtn}</div></div>`;
             showModal('Gate Pass Details', modalContent);
         } else {
             const r = allMaterialRequests.find(req => req.id === id);
-            let itemsHtml = '<table class="w-full border mt-3"><tr class="bg-gray-100"><th class="p-2 border">Item</th><th class="p-2 border">Qty</th><th class="p-2 border">Unit</th><th class="p-2 border">Remarks</th></tr>';
-            r.items.forEach(i => itemsHtml += `<tr><td class="p-2 border">${i.name}</td><td class="p-2 border text-center">${i.qty}</td><td class="p-2 border">${i.unit}</td><td class="p-2 border">${i.remarks || '-'}</td></tr>`);
+            let itemsHtml = '<table class="w-full border mt-3"><tr class="bg-gray-100"><th class="p-2 border">Item</th><th class="p-2 border">Qty</th><th class="p-2 border">Unit</th><th class="p-2 border">Remarks</th><tr>';
+            r.items.forEach(i => itemsHtml += `<td><td class="p-2 border">${i.name}</td><td class="p-2 border text-center">${i.qty}</td><td class="p-2 border">${i.unit}</td><td class="p-2 border">${i.remarks || '-'}<\/td></table>`);
             itemsHtml += '</tbody></table>';
             let approveBtns = '';
             if (currentUser.role === 'admin') {
@@ -673,8 +683,8 @@
         }
         let html = `
             <div class="flex justify-between items-center mb-4 flex-wrap gap-3">
-                <h2 class="text-xl font-bold" style="color:#6d28d9;"><i class="fas fa-users mr-2"></i>User Management</h2>
-                <button onclick="exportUsersToCSV()" class="bg-purple-600 text-white px-4 py-2 rounded-lg text-sm"><i class="fas fa-file-csv mr-1"></i> Export CSV</button>
+                <h2 class="text-xl font-bold" style="color:#1e3a5f;"><i class="fas fa-users mr-2"></i>User Management</h2>
+                <button onclick="exportUsersToCSV()" class="bg-navy text-white px-4 py-2 rounded-lg text-sm">?? Export CSV</button>
             </div>
             <div class="search-box"><i class="fas fa-search"></i><input type="text" id="userSearchInput" placeholder="Search by username, name or email..." onkeyup="filterUsers()" class="w-full"></div>
             <div class="flex gap-2 flex-wrap mb-4"><span class="role-badge ${userRoleFilter==='all'?'active':''}" onclick="filterByRole('all')">All</span><span class="role-badge ${userRoleFilter==='admin'?'active':''}" onclick="filterByRole('admin')">Admin</span><span class="role-badge ${userRoleFilter==='gate_approver'?'active':''}" onclick="filterByRole('gate_approver')">Gate Approver</span><span class="role-badge ${userRoleFilter==='staff'?'active':''}" onclick="filterByRole('staff')">Staff</span></div>
@@ -687,7 +697,7 @@
             if (user.approved && !user.blocked && username !== 'admin') html += `<button onclick="blockUser('${username}')" class="bg-red-500 text-white px-2 py-1 rounded text-xs">Block</button>`;
             if (user.blocked) html += `<button onclick="unblockUser('${username}')" class="bg-yellow-500 text-white px-2 py-1 rounded text-xs">Unblock</button>`;
             if (username !== 'admin') html += `<button onclick="deleteUser('${username}')" class="bg-red-500 text-white px-2 py-1 rounded text-xs">Delete</button>`;
-            html += `</div></div></tr>`;
+            html += `</div></div></td>`;
         }
         html += `</tbody></table></div><div class="mt-4 text-gray-500">Total Users: ${filteredUsers.length}</div><button onclick="showGateForm()" class="btn-secondary mt-5 py-2 px-5 rounded-lg text-white">Back to Dashboard</button>`;
         document.getElementById('contentArea').innerHTML = html;
